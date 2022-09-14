@@ -1,0 +1,8 @@
+# Vim editor sessions
+.session.vim
+
+# VSCode settings
+.vscode/
+
+# Build output directory
+bin/

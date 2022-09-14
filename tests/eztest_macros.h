@@ -1,5 +1,5 @@
-#ifndef EZTEST_HEADERS_H
-#define EZTEST_HEADERS_H
+#ifndef EZTEST_MACROS_H
+#define EZTEST_MACROS_H
 
 #define TEST_START(name) auto name = []() { \
     bool _eztest_passed = true;             \
@@ -42,4 +42,4 @@ if (expression) {                                       \
     _eztest_passed = false;                             \
 }
 
-#endif // EZTEST_HEADERS_H
+#endif // EZTEST_MACROS_H

@@ -1,5 +1,5 @@
 #include "eztest.hpp"
-#include "eztest_headers.h"
+#include "eztest_macros.h"
 
 #include "../lib/vec3f.h"
 

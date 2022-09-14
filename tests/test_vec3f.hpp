@@ -1,3 +1,7 @@
+/*
+ * Unit tests for vec3f class
+ * Using custom eztest framework, see eztest_macros.h for implementation detail
+ */
 
 TEST_START(test_vec3f_addition)
 

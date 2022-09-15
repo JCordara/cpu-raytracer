@@ -23,8 +23,39 @@ float vec3f::dot(vec3f& rhs) {
     return (this->x * rhs.x) + (this->y * rhs.y) + (this->z * rhs.z);
 }
 
-vec3f vec3f::cross(vec3f& rhs) {return vec3f();}
-vec3f vec3f::reflect(vec3f& normal) {return vec3f();}
+float vec3f::dot(vec3f&& rhs) {
+    return (this->x * rhs.x) + (this->y * rhs.y) + (this->z * rhs.z);
+}
+
+vec3f vec3f::cross(vec3f& rhs) {
+    return vec3f(
+        (this->y * rhs.z) - (this->z * rhs.y),
+        (this->z * rhs.x) - (this->x * rhs.z),
+        (this->x * rhs.y) - (this->y * rhs.x)
+    );
+}
+
+vec3f vec3f::cross(vec3f&& rhs) {
+    return vec3f(
+        (this->y * rhs.z) - (this->z * rhs.y),
+        (this->z * rhs.x) - (this->x * rhs.z),
+        (this->x * rhs.y) - (this->y * rhs.x)
+    );
+}
+
+vec3f vec3f::reflect(vec3f& normal) {
+    vec3f n = normal.normalize();
+    float dp = this->dot(n);
+    vec3f operand = 2 * dp * n;
+    return *this - operand;
+}
+
+vec3f vec3f::reflect(vec3f&& normal) {
+    vec3f n = normal.normalize();
+    float dp = this->dot(n);
+    vec3f operand = 2 * dp * n;
+    return *this - operand;
+}
 
 
 // Binary operations with scalar types

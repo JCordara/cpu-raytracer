@@ -13,8 +13,11 @@ public:
     float z;
         
     float dot(vec3f& rhs);
+    float dot(vec3f&& rhs);
     vec3f cross(vec3f& rhs);
+    vec3f cross(vec3f&& rhs);
     vec3f reflect(vec3f& normal);
+    vec3f reflect(vec3f&& normal);
 
     float magnitude() const;
     vec3f normalize() const;

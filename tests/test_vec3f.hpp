@@ -48,38 +48,38 @@ TEST_END(test_vec3f_dot_product)
 
 TEST_START(test_vec3f_cross_product)
 
-    vec3f u(1.0f, 2.0f, 3.0f);
-    vec3f v(1.0f, -5.0f, 15.0f);
+    vec3f u(2.0f, 3.0f, 4.0f);
+    vec3f v(5.0f, 6.0f, 7.0f);
     vec3f result;
 
     result = u.cross(v);
-    CHECK_EQ(result.x, 0.0f, "vec3f x vec3f cross product incorrect in x component")
-    CHECK_EQ(result.y, 0.0f, "vec3f x vec3f cross product incorrect in y component")
-    CHECK_EQ(result.z, 0.0f, "vec3f x vec3f cross product incorrect in z component")
+    CHECK_EQ(result.x, -3.0f, "vec3f x vec3f cross product incorrect in x component")
+    CHECK_EQ(result.y,  6.0f, "vec3f y vec3f cross product incorrect in y component")
+    CHECK_EQ(result.z, -3.0f, "vec3f z vec3f cross product incorrect in z component")
     
     result = v.cross(u);
-    CHECK_EQ(result.x, 0.0f, "vec3f x vec3f cross product incorrect - commutativity issue")
-    CHECK_EQ(result.y, 0.0f, "vec3f x vec3f cross product incorrect - commutativity issue")
-    CHECK_EQ(result.z, 0.0f, "vec3f x vec3f cross product incorrect - commutativity issue")
+    CHECK_EQ(result.x,  3.0f, "vec3f x vec3f cross product incorrect - commutativity issue")
+    CHECK_EQ(result.y, -6.0f, "vec3f y vec3f cross product incorrect - commutativity issue")
+    CHECK_EQ(result.z,  3.0f, "vec3f z vec3f cross product incorrect - commutativity issue")
 
 TEST_END(test_vec3f_cross_product)
 
 
 TEST_START(test_vec3f_reflect)
 
-    vec3f u(1.0f, 2.0f, 3.0f);
-    vec3f v(1.0f, -5.0f, 15.0f);
+    vec3f n0(0.0f, 1.0f, 0.0f);
+    vec3f v0(1.0f, -1.0f, 0.0f);
+    vec3f n1(2.7f, -1.2f, 5.3f);
+    vec3f v1(0.25f, 5.2f, -8.8f);
     vec3f result;
 
-    result = u.reflect(v);
-    CHECK_EQ(result.x, 0.0f, "vec3f x vec3f reflect incorrect in x component")
-    CHECK_EQ(result.y, 0.0f, "vec3f x vec3f reflect incorrect in y component")
-    CHECK_EQ(result.z, 0.0f, "vec3f x vec3f reflect incorrect in z component")
-    
-    result = v.reflect(u);
-    CHECK_EQ(result.x, 0.0f, "vec3f x vec3f reflect incorrect - commutativity issue")
-    CHECK_EQ(result.y, 0.0f, "vec3f x vec3f reflect incorrect - commutativity issue")
-    CHECK_EQ(result.z, 0.0f, "vec3f x vec3f reflect incorrect - commutativity issue")
+    result = v0.reflect(n0);
+    CHECK_EQ(result.x, 1.0f, "vec3f reflection incorrect in x component - 2D test")
+    CHECK_EQ(result.y, 1.0f, "vec3f reflection incorrect in y component - 2D test")
+    CHECK_EQ(result.z, 0.0f, "vec3f reflection incorrect in z component - 2D test")
+
+    result = v1.reflect(n1);
+    CHECK_EQ_EPS(result.magnitude(), v1.magnitude(), "vec3f magnitude changed after reflection")
 
 TEST_END(test_vec3f_reflect)
 

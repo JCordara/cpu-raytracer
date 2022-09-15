@@ -4,7 +4,7 @@
 #define TEST_START(name) auto name = []() { \
     bool _eztest_passed = true;             \
     float _eztest_diff = 0;                 \
-    float _eztest_eps = 0.0000001;
+    float _eztest_eps = 0.000001;
 
 #define TEST_END(name)          \
     return _eztest_passed;      \

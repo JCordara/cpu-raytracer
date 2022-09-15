@@ -3,7 +3,7 @@
 
 // Binary operations between vectors
 
-vec3f operator+(vec3f& lhs, vec3f& rhs) {
+vec3f operator+(const vec3f& lhs, const vec3f& rhs) {
     return vec3f(
         lhs.x + rhs.x,
         lhs.y + rhs.y,
@@ -11,7 +11,7 @@ vec3f operator+(vec3f& lhs, vec3f& rhs) {
     );
 }
 
-vec3f operator-(vec3f& lhs, vec3f& rhs) {
+vec3f operator-(const vec3f& lhs, const vec3f& rhs) {
     return vec3f(
         lhs.x - rhs.x,
         lhs.y - rhs.y,
@@ -206,9 +206,9 @@ vec3f operator/(int scalar, vec3f const& v) {
 float vec3f::magnitude() const {
     // Apparently this is the fasted sqrt algorithm out there
     return sqrt(
-        this->x * this->x +
-        this->y * this->y +
-        this->z * this->z
+        (this->x * this->x) +
+        (this->y * this->y) +
+        (this->z * this->z)
     );
 }
 
@@ -222,6 +222,13 @@ vec3f vec3f::normalize() const {
     );
 }
 
+vec3f vec3f::operator-() const {
+    return vec3f(
+        -this->x,
+        -this->y,
+        -this->z
+    );
+}
 
 // Constructors
 

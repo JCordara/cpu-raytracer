@@ -197,6 +197,18 @@ TEST_START(test_scalar_division)
 TEST_END(test_scalar_division)
 
 
+TEST_START(test_scalar_negation)
+
+    vec3f v(0.0f, 5.0f, -10.0f);
+    vec3f result;
+
+    result = -v;
+    CHECK_EQ(result.x,  0.0f,  "vec3f negation incorrect in x component")
+    CHECK_EQ(result.y, -5.0f,  "vec3f negation incorrect in y component")
+    CHECK_EQ(result.z, 10.0f,  "vec3f negation incorrect in z component")
+
+TEST_END(test_scalar_negation)
+
 
 TEST_START(test_vec3f_magnitude)
 

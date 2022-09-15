@@ -21,6 +21,7 @@ public:
 
     float magnitude() const;
     vec3f normalize() const;
+    vec3f operator-() const;
 
     vec3f();
     vec3f(float init_value);
@@ -62,7 +63,7 @@ vec3f operator/(vec3f const& v, int   scalar);
 vec3f operator/(float scalar,   vec3f const& v);
 vec3f operator/(int   scalar,   vec3f const& v);
 
-vec3f operator+(vec3f& lhs, vec3f& rhs);
-vec3f operator-(vec3f& lhs, vec3f& rhs);
+vec3f operator+(const vec3f& lhs, const vec3f& rhs);
+vec3f operator-(const vec3f& lhs, const vec3f& rhs);
 
 #endif // VEC_3_F_H

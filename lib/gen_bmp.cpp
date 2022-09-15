@@ -34,21 +34,20 @@ void Bitmap::BitmapInfoHeader::write_to_stream(std::ofstream &fout) {
 }
 
 void Bitmap::from_color_array (
-    const char* color_array, 
+    const unsigned char* color_array, 
     int width,
     int height,
     const char* filename) 
 {
-    int array_size = width * height * 3 * sizeof(char);
-
+    int array_size = width * height * 3 * sizeof(unsigned char);
     BitmapFileHeader file_header(array_size);
     BitmapInfoHeader info_header(width,  height);
 
-    std::ofstream output_file(filename, std::ios::binary);
+    std::ofstream output_file(filename, std::ios::out | std::ios::binary);
 
     file_header.write_to_stream(output_file);
     info_header.write_to_stream(output_file);
-    output_file.write(color_array, array_size);
+    output_file.write(reinterpret_cast<const char*>(color_array), array_size);
 
     output_file.close();
 }

@@ -35,7 +35,7 @@ class Bitmap {
 public:
 
     static void from_color_array (
-        const char* color_array, 
+        const unsigned char* color_array, 
         int width,
         int height,
         const char* filename = "output.bmp");

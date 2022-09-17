@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# Continuously run the program on a loop, rebuilding when file checksum changes
+# Cancel with ctrl+C
+
 import os
 import sys
 import hashlib

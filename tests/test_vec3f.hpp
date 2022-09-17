@@ -3,7 +3,6 @@
  * Using custom eztest framework, see eztest_macros.h for implementation detail
  */
 
-
 TEST_START(test_vec3f_addition)
 
     vec3f u(1.0f, 2.0f, 3.0f);

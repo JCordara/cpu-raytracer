@@ -1,5 +1,5 @@
 #include "vec3f.h"
-#include <math.h>
+#include "common.h"
 
 // Binary operations between vectors
 

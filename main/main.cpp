@@ -1,6 +1,5 @@
 #include "../lib/gen_bmp.h"
-#include "../lib/vec3f.h"
-#include <math.h>
+#include "../lib/vex3d.h"
 
 #ifdef _DEBUG
     #include <iostream>

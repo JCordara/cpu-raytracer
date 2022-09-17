@@ -1,6 +1,5 @@
 #include "gen_bmp.h"
 
-
 Bitmap::BitmapFileHeader::BitmapFileHeader (int pixel_data_size) {
    this->file_size = 
        pixel_data_offset + static_cast<uint32_t>(pixel_data_size); 
@@ -33,13 +32,24 @@ void Bitmap::BitmapInfoHeader::write_to_stream(std::ofstream &fout) {
     fout.write((char*)&this->important_colors, sizeof(uint32_t));
 }
 
+const byte* Bitmap::reorder_rgb(const byte* color_array, int size) {
+    byte* arr = new byte[size];
+    for (int i = 0; i < size; i += 3) {
+        arr[ i ] = color_array[i+2];
+        arr[i+1] = color_array[i+1];
+        arr[i+2] = color_array[ i ];
+    }
+    return arr;
+}
+
 void Bitmap::from_color_array (
-    const unsigned char* color_array, 
+    const byte* color_array, 
     int width,
     int height,
     const char* filename) 
 {
-    int array_size = width * height * 3 * sizeof(unsigned char);
+    int array_size = width * height * 3 * sizeof(byte);
+    const byte* reordered_color_array = reorder_rgb(color_array, array_size);
     BitmapFileHeader file_header(array_size);
     BitmapInfoHeader info_header(width,  height);
 
@@ -47,8 +57,9 @@ void Bitmap::from_color_array (
 
     file_header.write_to_stream(output_file);
     info_header.write_to_stream(output_file);
-    output_file.write(reinterpret_cast<const char*>(color_array), array_size);
+    output_file.write(reinterpret_cast<const char*>(reordered_color_array), array_size);
 
     output_file.close();
+    delete[] reordered_color_array;
 }
 

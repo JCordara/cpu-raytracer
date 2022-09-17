@@ -12,14 +12,15 @@ public:
     float y;
     float z;
         
-    float dot(vec3f& rhs);
-    float dot(vec3f&& rhs);
-    vec3f cross(vec3f& rhs);
-    vec3f cross(vec3f&& rhs);
-    vec3f reflect(vec3f& normal);
-    vec3f reflect(vec3f&& normal);
+    float dot(const vec3f& rhs) const;
+    float dot(const vec3f&& rhs) const;
+    vec3f cross(const vec3f& rhs) const;
+    vec3f cross(const vec3f&& rhs) const;
+    vec3f reflect(const vec3f& normal) const;
+    vec3f reflect(const vec3f&& normal) const;
 
     float magnitude() const;
+    float magnitude2() const;
     vec3f normalize() const;
     vec3f operator-() const;
 

@@ -3,6 +3,8 @@
 
 #include <fstream>
 
+typedef unsigned char byte;
+
 class Bitmap {
 
     struct BitmapFileHeader {
@@ -23,8 +25,8 @@ class Bitmap {
         uint16_t color_depth = 24;
         uint32_t compression = 0;
         uint32_t bitmap_data_size_raw = 0;
-        int32_t horizontal_resolution = 3780; // try 0
-        int32_t vertical_resolution = 3780; // try 0
+        int32_t horizontal_resolution = 0;
+        int32_t vertical_resolution = 0;
         uint32_t color_table_entries = 0;
         uint32_t important_colors = 0;
 
@@ -32,10 +34,13 @@ class Bitmap {
         void write_to_stream(std::ofstream &fout); 
     };
 
+    // Bitmap format stores colors as BGR instead of RGB
+    static const byte* reorder_rgb(const byte* color_array, int size);
+
 public:
 
     static void from_color_array (
-        const unsigned char* color_array, 
+        const byte* color_array, 
         int width,
         int height,
         const char* filename = "output.bmp");

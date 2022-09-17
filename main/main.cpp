@@ -11,7 +11,7 @@
 
 #define PI 3.14159f
 
-void print_vec3(vec3 v, bool newline = true) {
+void print_vec3(const vec3& v, bool newline = true) {
     cout << "(" << v.x << ", " << v.y << ", " << v.z << ") ";
     if (newline) {
         cout << "\n";
@@ -89,9 +89,11 @@ public:
         float c = v.dot(v) - radius_sqr;
         float disc = (b * b) - (4 * a * c);
         
-        print_vec3(ray.origin, false);
-        cout << ", ";
-        print_vec3(origin);
+        // cout << "[Sphere::check_intersection] this = " << this << "\n";
+        // cout << "[Sphere::check_intersection] ";
+        // print_vec3(ray.origin, false);
+        // cout << ", ";
+        // print_vec3(origin);
 
         //cout << disc << "\n";
         
@@ -132,6 +134,7 @@ public:
         }
         delete[] shapes;
         shapes = tmp_shapes;
+        shapes[shape_count] = s;
         shape_count += 1;
     }
 
@@ -238,20 +241,25 @@ public:
     vec3 trace(const vec3& origin, const vec3& direction) {
         int list_tail = 0;
         Ray ray(origin, direction);
-        cout << "Casting ray:\n";
-        for (Sphere& shape : *_scene) {
-            cout << "Sphere origin: ";
-            print_vec3(shape.origin);
-            Intersection i = shape.check_intersection(ray);
-            cout << (i.valid ? "valid  " : "invalid"); 
-            cout << " - color: ";
-            print_vec3(i.color, false);
-            cout << ", point: ";
-            print_vec3(i.point);
+        // Iterator is broken, hack fix for now?
+        for (Sphere* shape = _scene->begin(); shape != _scene->end(); ++shape) {
+            // cout << "[Raytracer::trace] ";
+            // cout << "Sphere address: " << shape << "\n";
+            // cout << "[Raytracer::trace] ";
+            // cout << "Sphere origin: ";
+            // print_vec3(shape->origin);
+            Intersection i = shape->check_intersection(ray);
+            // cout << "[Raytracer::trace] ";
+            // cout << (i.valid ? "valid  " : "invalid"); 
+            // cout << " - color: ";
+            // print_vec3(i.color, false);
+            // cout << ", point: ";
+            // print_vec3(i.point);
             // TODO: Ordered insertion
             if (i.valid) _intersection_pool[list_tail++] = i;
         }
-        cout << "Ray intersections: " << list_tail << "\n";
+        // cout << "[Raytracer::trace] ";
+        // cout << "Ray intersections: " << list_tail << "\n";
         // Return just the color of the first sphere for now
         if (list_tail == 0) return _empty_color;
         Intersection& closest_ixn = _intersection_pool[0];
@@ -280,43 +288,48 @@ public:
 
 int main(int argc, char **argv) {
     
-    int h_res = 19;//1920;
-    int v_res = 11;//1080;
+    int h_res = 1920;
+    int v_res = 1080;
 
     float canvas_width = 3.556f;
     float canvas_height = 2.0f;
 
-    vec3 camera_pos = vec3(0);
+    vec3 camera_pos = vec3(0.0f, 0.0f, 1.0f);
     Canvas canvas(canvas_width, canvas_height, h_res, v_res, vec3(0, 0, -1));
     Raytracer raytracer(camera_pos, canvas);
     // raytracer.set_num_bounces(3);
 
     Scene scene;
     scene.add_sphere(
-        vec3(0.0f, 1000.0f, -10.0f),
-        0.1f,
-        vec3(0, 0, 255)
+        vec3(0.0f, -100.0f, -40.0f),
+        100.0f,
+        vec3(50, 50, 50)
     );
-    // scene.add_sphere(
-    //     vec3(1.0f, -1.5f, -12.0f),
-    //     2.0f,
-    //     vec3(100, 255, 200)
-    // );
-    // scene.add_sphere(
-    //     vec3(-4.0f, 3.0f, -4.0f),
-    //     0.75f,
-    //     vec3(120, 60, 50)
-    // );
+    scene.add_sphere(
+        vec3(0.0f, 0.0f, -10.0f),
+        3.0f,
+        vec3(10, 0, 230)
+    );
+    scene.add_sphere(
+        vec3(3.0f, -1.5f, -5.0f),
+        0.5f,
+        vec3(75, 255, 150)
+    );
+    scene.add_sphere(
+        vec3(-1.75f, 0.5f, -5.0f),
+        0.5f,
+        vec3(100, 40, 30)
+    );
 
     raytracer.set_scene(scene);
 
-// cout << "start\n";
-//     const unsigned char* framebuffer = raytracer.trace_scene();
-// cout << "end\n";
+cout << "start\n";
+    const unsigned char* framebuffer = raytracer.trace_scene();
+cout << "end\n";
 
-    raytracer.trace(vec3(), vec3(0, 0, -1));
+    // raytracer.trace(vec3(), vec3(0, 0, -1));
 
-    // Bitmap::from_color_array(framebuffer, h_res, v_res);
+    Bitmap::from_color_array(framebuffer, h_res, v_res);
 
     return 0;
 }

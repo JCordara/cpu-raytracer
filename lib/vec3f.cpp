@@ -19,15 +19,15 @@ vec3f operator-(const vec3f& lhs, const vec3f& rhs) {
     );
 }
 
-float vec3f::dot(vec3f& rhs) {
+float vec3f::dot(const vec3f& rhs) const {
     return (this->x * rhs.x) + (this->y * rhs.y) + (this->z * rhs.z);
 }
 
-float vec3f::dot(vec3f&& rhs) {
+float vec3f::dot(const vec3f&& rhs) const {
     return (this->x * rhs.x) + (this->y * rhs.y) + (this->z * rhs.z);
 }
 
-vec3f vec3f::cross(vec3f& rhs) {
+vec3f vec3f::cross(const vec3f& rhs) const {
     return vec3f(
         (this->y * rhs.z) - (this->z * rhs.y),
         (this->z * rhs.x) - (this->x * rhs.z),
@@ -35,7 +35,7 @@ vec3f vec3f::cross(vec3f& rhs) {
     );
 }
 
-vec3f vec3f::cross(vec3f&& rhs) {
+vec3f vec3f::cross(const vec3f&& rhs) const {
     return vec3f(
         (this->y * rhs.z) - (this->z * rhs.y),
         (this->z * rhs.x) - (this->x * rhs.z),
@@ -43,14 +43,14 @@ vec3f vec3f::cross(vec3f&& rhs) {
     );
 }
 
-vec3f vec3f::reflect(vec3f& normal) {
+vec3f vec3f::reflect(const vec3f& normal) const {
     vec3f n = normal.normalize();
     float dp = this->dot(n);
     vec3f operand = 2 * dp * n;
     return *this - operand;
 }
 
-vec3f vec3f::reflect(vec3f&& normal) {
+vec3f vec3f::reflect(const vec3f&& normal) const {
     vec3f n = normal.normalize();
     float dp = this->dot(n);
     vec3f operand = 2 * dp * n;
@@ -206,6 +206,15 @@ vec3f operator/(int scalar, vec3f const& v) {
 float vec3f::magnitude() const {
     // Apparently this is the fasted sqrt algorithm out there
     return sqrt(
+        (this->x * this->x) +
+        (this->y * this->y) +
+        (this->z * this->z)
+    );
+}
+
+float vec3f::magnitude2() const {
+    // Apparently this is the fasted sqrt algorithm out there
+    return (
         (this->x * this->x) +
         (this->y * this->y) +
         (this->z * this->z)

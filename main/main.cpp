@@ -5,18 +5,21 @@
 #ifdef _DEBUG
     #include <iostream>
     #define cout std::cout
+
+    void print_vec3(const vec3& v, bool newline = true) {
+        cout << "(" << v.x << ", " << v.y << ", " << v.z << ") ";
+        if (newline) {
+            cout << "\n";
+        }
+    }
+
 #else
     #define cout //
+    void print_vec3(const vec3& v, bool newline = true) {}
 #endif
 
 #define PI 3.14159f
 
-void print_vec3(const vec3& v, bool newline = true) {
-    cout << "(" << v.x << ", " << v.y << ", " << v.z << ") ";
-    if (newline) {
-        cout << "\n";
-    }
-}
 
 class Ray {
 private:
@@ -197,6 +200,95 @@ public:
     vec3* end() {return pixels + arr_size;}
 };
 
+/* TODO: Allow for curved projection plane
+class ImageSurface {
+private:
+    vec3 *pixels;
+    float width;
+    float height;
+    int _h_res;
+    int _v_res;
+    int arr_size = 0;
+
+public:
+    ImageSurface(
+        float width, float height,
+        int _h_res, int _v_res,
+        const vec3& origin) 
+    {
+        // Initialize ImageSurface as grid of pixel coordinates in 3D space
+        arr_size = _h_res * _v_res;
+        pixels = new vec3[arr_size];
+
+        float half_width = width / 2.0f;
+        float half_height = height / 2.0f;
+
+        for (int row = 0; row < _v_res; row++) {
+            for (int col = 0; col < _h_res; col++) {
+                unsigned int index = (row * _h_res) + col;
+                float x = (static_cast<float>(col) / static_cast<float>(_h_res));
+                x = (x * width) - half_width;
+                float y = (static_cast<float>(row) / static_cast<float>(_v_res));
+                y = (y * height) - half_height;
+                pixels[index] = origin + vec3(x, y, 0.0f);
+            }
+        }
+    }
+
+    ~ImageSurface() {
+        delete[] pixels;
+    }
+
+    int get_h_res() {return _h_res;}
+    int get_v_res() {return _v_res;}
+    int pixel_count() {return arr_size;}
+
+    class PixelIterator {
+    private:
+        ;
+    public:
+        PixelIterator() = default;
+
+        vec3 operator*() {return vec3();}
+        PixelIterator& operator++() {
+            // Generate next pixel coords
+            return *this;
+        }
+    };
+
+    vec3* begin() {return pixels;}
+    vec3* end() {return pixels + arr_size;}
+};
+
+class Camera {
+private:
+    vec3 _pos;
+    // TODO: Add orientation
+    // vec3 _up;
+    float _aspect_ratio;
+    float _fov;
+    ImageSurface _image_surface;
+
+public:
+
+    Camera(float aspect_ratio, float fov):
+        _aspect_ratio(aspect_ratio),
+        _fov(fov),
+        _image_surface(0, 0, 0, 0, vec3())
+    {}
+
+    void set_pos(const vec3& new_pos) {_pos = new_pos;}
+    // void look_at(const vec3& target) {}
+    // void look_dir(const vec3& direction) {}
+
+    float apsect_ratio() {return _aspect_ratio;}
+    float fov() {return _fov;}
+
+    int image_width() {return _image_surface.get_h_res();}
+    int image_height() {return _image_surface.get_v_res();}
+};
+*/
+
 class Raytracer {
 private:
     Scene* _scene;
@@ -288,17 +380,7 @@ public:
 
 int main(int argc, char **argv) {
     
-    int h_res = 1920;
-    int v_res = 1080;
-
-    float canvas_width = 3.556f;
-    float canvas_height = 2.0f;
-
-    vec3 camera_pos = vec3(0.0f, 0.0f, 1.0f);
-    Canvas canvas(canvas_width, canvas_height, h_res, v_res, vec3(0, 0, -1));
-    Raytracer raytracer(camera_pos, canvas);
-    // raytracer.set_num_bounces(3);
-
+    // Scene
     Scene scene;
     scene.add_sphere(
         vec3(0.0f, -100.0f, -40.0f),
@@ -321,14 +403,23 @@ int main(int argc, char **argv) {
         vec3(100, 40, 30)
     );
 
+    // Canvas
+    int h_res = 1920;
+    int v_res = 1080;
+    float canvas_width = 3.556f;
+    float canvas_height = 2.0f;
+    Canvas canvas(canvas_width, canvas_height, h_res, v_res, vec3(0, 0, -1));
+
+    // Camera
+    vec3 camera_pos = vec3(0.0f, 0.0f, 1.0f);
+    
+    // Raytracer
+    Raytracer raytracer(camera_pos, canvas);
+    // raytracer.set_num_bounces(3);
     raytracer.set_scene(scene);
 
-cout << "start\n";
+    // Generate image
     const unsigned char* framebuffer = raytracer.trace_scene();
-cout << "end\n";
-
-    // raytracer.trace(vec3(), vec3(0, 0, -1));
-
     Bitmap::from_color_array(framebuffer, h_res, v_res);
 
     return 0;

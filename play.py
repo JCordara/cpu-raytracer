@@ -9,7 +9,7 @@ import hashlib
 import time
 
 def build():
-    os.system("g++ main\\*.cpp lib\\*.cpp -O3 -o bin\\cpu_raytracer.exe")
+    os.system("g++ main\\*.cpp lib\\*.cpp lib\\math\\*.cpp -O3 -o bin\\cpu_raytracer.exe")
 
 def run():
     os.system(".\\bin\\cpu_raytracer.exe >nul")
@@ -22,6 +22,7 @@ def md5(fname):
     return hash_md5.hexdigest()
 
 def main():
+    build()
     last_checksum = md5("main\\main.cpp")
     while(True):
         current_checksum = md5("main\\main.cpp")

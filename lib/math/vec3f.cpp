@@ -239,6 +239,18 @@ vec3f vec3f::operator-() const {
     );
 }
 
+
+// Element access
+
+float vec3f::operator[](int ix) {
+    if (ix == 0) return x;
+    if (ix == 1) return y;
+    if (ix == 2) return z;
+    else return NaN;
+}
+
+
+
 // Constructors
 
 vec3f::vec3f() {

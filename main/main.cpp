@@ -12,12 +12,19 @@
         }
     }
 
+    void print_mat3(const mat3& m, bool newline = true) {
+        cout << "| " << m[0][0] << ", " << m[0][1] << ", " << m[0][2];
+        cout << (newline ? " |\n" : ", ");
+        cout << "| " << m[1][0] << ", " << m[1][1] << ", " << m[1][2];
+        cout << (newline ? " |\n" : ", ");
+        cout << "| " << m[2][0] << ", " << m[2][1] << ", " << m[2][2];
+        cout << (newline ? " |\n" : " ");
+    }
+
 #else
     #define cout //
     void print_vec3(const vec3& v, bool newline = true) {}
 #endif
-
-#define PI 3.14159f
 
 
 class Ray {

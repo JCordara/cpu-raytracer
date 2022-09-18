@@ -15,7 +15,8 @@ public:
     mat3(
         float m00, float m01, float m02,
         float m10, float m11, float m12,
-        float m20, float m21, float m22
+        float m20, float m21, float m22,
+        bool col_major=false
     );
     mat3(float diagonal);
 
@@ -24,6 +25,18 @@ public:
     // Vector multiplication (only allow mat * vec, not vec * mat)
     vec3f operator*(const vec3f& rhs);
     
+    // Generator functions
+    static mat3 rot_x(float /* in radians */ angle, bool col_major=false);
+    static mat3 rot_y(float /* in radians */ angle, bool col_major=false);
+    static mat3 rot_z(float /* in radians */ angle, bool col_major=false);
+    static mat3 scale(float factor);
+    static mat3 scale_x(float factor);
+    static mat3 scale_y(float factor);
+    static mat3 scale_z(float factor);
+
+    // Element access
+    vec3f operator[](int ix) const;
+
     // Copy/move constructors
     mat3(const mat3& other);
     mat3(mat3&& other);

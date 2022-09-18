@@ -57,18 +57,21 @@ int main(int argc, char **argv) {
     );
 
     float aspect_ratio = 16.0f / 9.0f;
-    float fov = radians(60.0f);
+    float fov = radians(80.0f);
+    int vertical_resolution = 1080;
 
     // Camera
-    Camera camera(16.0f / 9.0f, radians(80.0f), 1080);
+    Camera camera(aspect_ratio, fov, vertical_resolution);
 
     // Raytracer
     Raytracer raytracer(&camera, &scene);
-    // raytracer.set_num_bounces(3);
+
+    // raytracer.set_num_bounces(3); // Unimplemented
 
     // Generate image
     const unsigned char* framebuffer = raytracer.trace_scene();
     Bitmap::from_color_array(framebuffer, camera.get_h_res(), camera.get_v_res());
+    
     return 0;
 }
 

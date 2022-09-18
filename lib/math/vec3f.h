@@ -32,6 +32,9 @@ public:
     vec3f(float xyz[3]);
     vec3f(int   xyz[3]);
 
+    // Element access
+    float operator[](int ix);
+
     // Copy/move constructors
     vec3f(const vec3f &other);
     vec3f(vec3f&& other) = default;

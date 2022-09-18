@@ -3,6 +3,14 @@
 
 #include "../lib/vex3d.h"
 
+/**
+ * Image surface objects are constructed by the camera object. The image surface 
+ * object generates and stores the locations of each pixel of the image in 3D 
+ * space, relative to the camera. Height of the image is dependant on field of 
+ * view. Pixel locations are dependant on image resolution (horizontal and 
+ * vertical) and field of view, and are regenerated any time one of those fields
+ * changes.
+ */
 class ImageSurface {
 private:
     

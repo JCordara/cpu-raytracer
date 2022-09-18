@@ -7,7 +7,9 @@ class Ray;
 class Intersection;
 
 /**
- * Class description
+ * Contains the necessary information to define a sphere in 3D space. Includes
+ * origin (center) of sphere and radius. Provides a method to calculate the 
+ * intersection of a given ray with itself.
  */
 class Sphere {
 public:

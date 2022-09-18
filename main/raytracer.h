@@ -9,7 +9,8 @@ class Ray;
 class Intersection;
 
 /**
- * Class description
+ * Raytracer objects contain the necessary information to create a raytraced
+ * image from a given scene and camera specification. 
  */
 class Raytracer {
 private:

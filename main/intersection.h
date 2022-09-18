@@ -3,6 +3,11 @@
 
 #include "../lib/vex3d.h"
 
+/**
+ * Stores information about ray-object intersection. Relevant information
+ * includes the point of intersection, the object normal at the point of 
+ * intersection, and the color of the object at the point of intersection.
+ */
 class Intersection {
 public:
 

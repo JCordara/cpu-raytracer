@@ -4,16 +4,23 @@
 #include "../lib/vex3d.h"
 #include "image_surface.h"
 
+/**
+ * Camera object is used as a constant reference by the ray tracer object.
+ * Composed of a position vector and an image surface. Image surface contains
+ * the locations of each pixel that makes up the screen. Resolution of the image
+ * produced by the raytracer is determined by the camera's resolution, which is
+ * stored in the image surface object.
+ */
 class Camera {
 private:
     vec3 _pos;
     // TODO: Add orientation
     // vec3 _up;
 
+    ImageSurface _image_surface;
+
     float _aspect_ratio;
     float _fov;
-
-    ImageSurface _image_surface;
 
 public:
 

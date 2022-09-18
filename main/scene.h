@@ -6,7 +6,9 @@
 class Sphere;
 
 /**
- * Class description
+ * A scene is a container for objects in 3D space. Raytracer objects hold a
+ * constant reference to a scene object that is used to generate the image. 
+ * Object provides a forward read-only iterator over the objects in the scene.
  */
 class Scene {
 public:

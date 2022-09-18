@@ -3,6 +3,11 @@
 
 #include "../lib/vex3d.h"
 
+/**
+ * Contains information to define a ray in 3D space. Includes point of origin 
+ * and direction. Normalized direction can be obtained through a lazy 
+ * calculation.
+ */
 class Ray {
 private:
 

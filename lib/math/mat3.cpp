@@ -153,8 +153,13 @@ mat3 mat3::rot_x(float /* in radians */ angle, bool col_major) {
 }
 
 mat3 mat3::rot_y(float /* in radians */ angle, bool col_major) {
+<<<<<<< HEAD
     float cos_angle = cos(-angle);
     float sin_angle = sin(-angle);
+=======
+    float cos_angle = cos(angle);
+    float sin_angle = sin(angle);
+>>>>>>> c5880ff (Implement basic 3x3 matrix)
     mat3 rotation_matrix;
     if (!col_major) {
         rotation_matrix._values[0] = cos_angle;

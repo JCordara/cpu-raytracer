@@ -9,7 +9,7 @@ import hashlib
 import time
 
 def build():
-    os.system("g++ main\\*.cpp lib\\*.cpp lib\\math\\*.cpp -O3 -o bin\\cpu_raytracer.exe")
+    os.system("g++ main\\*.cpp lib\\*.cpp lib\\math\\*.cpp -s -O3 -o bin\\cpu_raytracer.exe")
 
 def run():
     os.system(".\\bin\\cpu_raytracer.exe >nul")

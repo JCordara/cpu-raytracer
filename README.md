@@ -6,6 +6,7 @@
 - Custom image output library
   - Generates 24bit color depth .bmp images
 - Basic raytracing model implemented
+  - Curved image plane (allows 360+ degrees field of view)
 - No shading/lighting
 - Ray-sphere collisions
 
@@ -15,6 +16,7 @@
 - Fast
   - Multithreaded image generation
   - Optimized intersection algorithms
+- Handle reflections and refractions
 
 # Demo of current status
-![demo_img](images/flat_image_plane.bmp)
+![demo_img](images/curved_image_plane.bmp)

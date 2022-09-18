@@ -97,15 +97,7 @@ public:
         float b = 2.0f * ray.direction.dot(v);
         float c = v.dot(v) - radius_sqr;
         float disc = (b * b) - (4 * a * c);
-        
-        // cout << "[Sphere::check_intersection] this = " << this << "\n";
-        // cout << "[Sphere::check_intersection] ";
-        // print_vec3(ray.origin, false);
-        // cout << ", ";
-        // print_vec3(origin);
 
-        //cout << disc << "\n";
-        
         if (disc < 0) { // No collision
             return Intersection::none();
         }
@@ -180,53 +172,6 @@ public:
 
     Iterator begin() const { return Iterator(&_shapes[0]); }
     Iterator end() const { return Iterator(&_shapes[_shape_count]); }
-};
-
-class Canvas {
-private:
-    vec3 *pixels;
-    float width;
-    float height;
-    int _h_res;
-    int _v_res;
-    int arr_size = 0;
-
-public:
-    Canvas(
-        float width, float height,
-        int _h_res, int _v_res,
-        const vec3& origin) 
-    {
-        // Initialize canvas as grid of pixel coordinates in 3D space
-        arr_size = _h_res * _v_res;
-        pixels = new vec3[arr_size];
-
-        float half_width = width / 2.0f;
-        float half_height = height / 2.0f;
-        vec3 canvas_normal = vec3(0, 0, 1);
-
-        for (int row = 0; row < _v_res; row++) {
-            for (int col = 0; col < _h_res; col++) {
-                unsigned int index = (row * _h_res) + col;
-                float x = (static_cast<float>(col) / static_cast<float>(_h_res));
-                x = (x * width) - half_width;
-                float y = (static_cast<float>(row) / static_cast<float>(_v_res));
-                y = (y * height) - half_height;
-                pixels[index] = origin + vec3(x, y, 0.0f);
-            }
-        }
-    }
-
-    ~Canvas() {
-        delete[] pixels;
-    }
-
-    int get_h_res() {return _h_res;}
-    int get_v_res() {return _v_res;}
-    int get_pixel_count() {return arr_size;}
-
-    vec3* begin() {return pixels;}
-    vec3* end() {return pixels + arr_size;}
 };
 
 class ImageSurface {
@@ -326,8 +271,6 @@ public:
     PixelIterator end() const { return PixelIterator(&_pixels[_arr_size]); }
 };
 
-
-
 class Camera {
 private:
     vec3 _pos;
@@ -414,26 +357,10 @@ public:
     vec3 trace(const vec3& origin, const vec3& direction) {
         int list_tail = 0;
         Ray ray(origin, direction);
-        // Iterator is broken, hack fix for now?
         for (const auto& shape : *_scene) {
-            // cout << "[Raytracer::trace] ";
-            // cout << "Sphere address: " << shape << "\n";
-            // cout << "[Raytracer::trace] ";
-            // cout << "Sphere origin: ";
-            // print_vec3(shape->origin);
             Intersection i = shape.check_intersection(ray);
-            // cout << "[Raytracer::trace] ";
-            // cout << (i.valid ? "valid  " : "invalid"); 
-            // cout << " - color: ";
-            // print_vec3(i.color, false);
-            // cout << ", point: ";
-            // print_vec3(i.point);
-            // TODO: Ordered insertion
             if (i.valid) _intersection_pool[list_tail++] = i;
         }
-        // cout << "[Raytracer::trace] ";
-        // cout << "Ray intersections: " << list_tail << "\n";
-        // Return just the color of the first sphere for now
         if (list_tail == 0) return _empty_color;
         Intersection& closest_ixn = _intersection_pool[0];
         vec3 init_diff = closest_ixn.point - _camera->get_pos();
@@ -490,8 +417,6 @@ int main(int argc, char **argv) {
 
     // Camera
     Camera camera(16.0f / 9.0f, radians(80.0f), 1080);
-    // camera.set_h_res(16);
-    // camera.set_v_res(9);
 
     // Raytracer
     Raytracer raytracer(&camera, &scene);

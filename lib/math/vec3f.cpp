@@ -324,18 +324,22 @@ vec3f& vec3f::operator=(vec3f&& rhs) {
 // Equality operator
 
 bool vec3f::operator==(const vec3f& rhs) {
-    return (
-        this->x == rhs.x &&
-        this->y == rhs.y &&
-        this->z == rhs.z
-    );
+    const float eps = 0.00001f;
+    if (abs(this->x - rhs.x) > eps) return false;
+    if (abs(this->y - rhs.y) > eps) return false;
+    if (abs(this->z - rhs.z) > eps) return false;
+    return true;
 }
 
 bool vec3f::operator!=(const vec3f& rhs) {
-    return (
-        this->x != rhs.x ||
-        this->y != rhs.y ||
-        this->z != rhs.z
-    );
+    const float eps = 0.00001f;
+    if (abs(this->x - rhs.x) < eps) {
+        if (abs(this->y - rhs.y) < eps) {
+            if (abs(this->z - rhs.z) < eps) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 

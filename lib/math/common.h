@@ -2,6 +2,7 @@
 #define COMMON_MATH_H
 
 #define NaN           1.175494351e-38f
+#define EPSILON       0.100000000e-10f
 #define QUARTER_PI    0.7853981633974f
 #define HALF_PI       1.5707963267948f
 #define PI            3.1415926535897f
@@ -16,6 +17,11 @@ constexpr float _4_fact_inv = 1.0f / (4.0f * 3.0f * 2.0f);
 constexpr float _5_fact_inv = 1.0f / (5.0f * 4.0f * 3.0f * 2.0f);
 constexpr float _6_fact_inv = 1.0f / (6.0f * 5.0f * 4.0f * 3.0f * 2.0f);
 constexpr float _7_fact_inv = 1.0f / (7.0f * 6.0f * 5.0f * 4.0f * 3.0f * 2.0f);
+
+inline constexpr float abs(float x) {
+    if (x < 0) return -x;
+    else return x;
+}
 
 inline constexpr float radians(float degrees) {
     return _deg_to_rad_ratio * degrees;
@@ -44,6 +50,11 @@ inline float sin(float radians) {
     while (radians >= TWO_PI) radians -= TWO_PI;
     while (radians < 0) radians += TWO_PI;
 
+    if      (abs(radians - 0.0f) < EPSILON)          return  0.0f;
+    else if (abs(radians - HALF_PI) < EPSILON)       return  1.0f;
+    else if (abs(radians - PI) < EPSILON)            return  0.0f;
+    else if (abs(radians - THREE_HALF_PI) < EPSILON) return -1.0f;
+
     // Use vertical symmetry if in quadrants 3 or 4
     float multiplier = 1.0f;
     if (radians >= PI) {
@@ -60,6 +71,11 @@ inline constexpr float cos(float radians) {
     // Get into 0 - 360 degree range
     while (radians >= TWO_PI) radians -= TWO_PI;
     while (radians < 0) radians += TWO_PI;
+
+    if      (abs(radians - 0.0f) < EPSILON)           return  1.0f;
+    else if (abs(radians - HALF_PI) < EPSILON)        return  0.0f;
+    else if (abs(radians - PI) < EPSILON)             return -1.0f;
+    else if (abs(radians - THREE_HALF_PI) < EPSILON)  return  0.0f;
 
     // Use vertical symmetry if in quadrants 3 or 4
     float multiplier = 1.0f;

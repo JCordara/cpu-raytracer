@@ -28,7 +28,7 @@ void Camera::set_v_res(int new_v_res) {
     _image_surface.set_v_res(new_v_res);
 }
 
-vec3 Camera::get_pos() const {
+vec3 Camera::pos() const {
     return _pos;
 }
 
@@ -44,14 +44,14 @@ const ImageSurface& Camera::image_surface() const {
     return _image_surface;
 }
 
-int Camera::get_h_res() const {
-    return _image_surface.get_h_res();
+int Camera::h_res() const {
+    return _image_surface.h_res();
 }
 
-int Camera::get_v_res() const {
-    return _image_surface.get_v_res();
+int Camera::v_res() const {
+    return _image_surface.v_res();
 }
 
-int Camera::get_pixel_count() const {
-    return _image_surface.get_pixel_count();
+int Camera::pixel_count() const {
+    return _image_surface.pixel_count();
 }

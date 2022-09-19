@@ -25,9 +25,9 @@ public:
     Intersection(const Intersection& other) = default;
     Intersection& operator=(const Intersection& rhs) = default;
 
-    vec3 get_normal();
-    vec3 get_color();
-    vec3 get_point();
+    vec3 normal();
+    vec3 color();
+    vec3 point();
     void set_normal(const vec3& new_normal);
     void set_color(const vec3& new_color);
     void set_point(const vec3& new_point);

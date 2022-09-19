@@ -36,17 +36,16 @@ public:
     void set_h_res(int new_h_res);
     void set_v_res(int new_v_res);
 
-    vec3 get_pos() const;
+    vec3 pos() const;
     float apsect_ratio() const;
     float fov() const;
+    int h_res() const;
+    int v_res() const;
+    int pixel_count() const;
 
     // Read-only reference to the underlying image surface for pixel iteration
     const ImageSurface& image_surface() const;
-
-    int get_h_res() const;
-    int get_v_res() const;
-    int get_pixel_count() const;
-
+    
 };
 
 #endif // CAMERA_H

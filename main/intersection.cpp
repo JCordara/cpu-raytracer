@@ -13,15 +13,15 @@ Intersection Intersection::none() {
     return empty_intersection;
 }
 
-vec3 Intersection::get_normal() {
+vec3 Intersection::normal() {
     return _normal;
 }
 
-vec3 Intersection::get_color() {
+vec3 Intersection::color() {
     return _color;
 }
 
-vec3 Intersection::get_point() {
+vec3 Intersection::point() {
     return _point;
 }
 

@@ -14,11 +14,11 @@ vec3 Ray::normalized_dir() {
     return _direction_normalized;
 }
 
-vec3 Ray::get_origin() const {
+vec3 Ray::origin() const {
     return _origin;
 }
 
-vec3 Ray::get_direction() const {
+vec3 Ray::direction() const {
     return _direction;
 }
 

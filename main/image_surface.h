@@ -33,10 +33,10 @@ public:
     void set_h_res(int new_h_res);
     void set_v_res(int new_v_res);
 
-    float get_fov() const;
-    int get_h_res() const;
-    int get_v_res() const;
-    int get_pixel_count() const;
+    float fov() const;
+    int h_res() const;
+    int v_res() const;
+    int pixel_count() const;
 
     /**
      * Internal function for generating curved image surface given fov and 

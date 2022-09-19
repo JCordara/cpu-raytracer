@@ -22,8 +22,8 @@ public:
     // Lazy calculation of normalized direction
     vec3 normalized_dir();
 
-    vec3 get_origin() const;
-    vec3 get_direction() const;
+    vec3 origin() const;
+    vec3 direction() const;
     void set_origin(const vec3& new_origin);
     void set_direction(const vec3& new_direction);
 

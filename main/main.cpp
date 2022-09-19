@@ -71,7 +71,7 @@ int main(int argc, char **argv) {
 
     // Generate image
     const unsigned char* framebuffer = raytracer.trace_scene();
-    Bitmap::from_color_array(framebuffer, camera.get_h_res(), camera.get_v_res());
+    Bitmap::from_color_array(framebuffer, camera.h_res(), camera.v_res());
     
     return 0;
 }

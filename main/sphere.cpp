@@ -9,9 +9,9 @@ Sphere::Sphere(const vec3& center, float radius, const vec3& color) {
 }
 
 Intersection Sphere::check_intersection(const Ray& ray) const {
-    vec3 v = ray.get_origin() - _center;
-    float a = ray.get_direction().dot(ray.get_direction());
-    float b = 2.0f * ray.get_direction().dot(v);
+    vec3 v = ray.origin() - _center;
+    float a = ray.direction().dot(ray.direction());
+    float b = 2.0f * ray.direction().dot(v);
     float c = v.dot(v) - (_radius * _radius);
     float disc = (b * b) - (4 * a * c);
 
@@ -31,21 +31,21 @@ Intersection Sphere::check_intersection(const Ray& ray) const {
     if (t0 < t1 && t0 >= 0) t = t0;
     else t = t1;
 
-    vec3 intersection_point = ray.get_origin() + (ray.get_direction() * t);
+    vec3 intersection_point = ray.origin() + (ray.direction() * t);
     vec3 normal = intersection_point - _center;
     normal = normal.normalize();
     return Intersection(intersection_point, normal, _color);
 }
 
-vec3 Sphere::get_center() {
+vec3 Sphere::center() {
     return _center;
 }
 
-vec3 Sphere::get_color() {
+vec3 Sphere::color() {
     return _color;
 }
 
-float Sphere::get_radius() {
+float Sphere::radius() {
     return _radius;
 }
 

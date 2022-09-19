@@ -39,19 +39,19 @@ void ImageSurface::set_v_res(int new_v_res) {
     _generate_surface();
 }
 
-float ImageSurface::get_fov() const {
+float ImageSurface::fov() const {
     return _fov;
 }
 
-int ImageSurface::get_h_res() const {
+int ImageSurface::h_res() const {
     return _h_res;
 }
 
-int ImageSurface::get_v_res() const {
+int ImageSurface::v_res() const {
     return _v_res;
 }
 
-int ImageSurface::get_pixel_count() const {
+int ImageSurface::pixel_count() const {
     return _arr_size;
 }
 

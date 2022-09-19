@@ -23,9 +23,9 @@ public:
 
     Intersection check_intersection(const Ray& ray) const;
     
-    vec3 get_center();
-    vec3 get_color();
-    float get_radius();
+    vec3 center();
+    vec3 color();
+    float radius();
     
     void set_center(vec3 new_center);
     void set_color(vec3 new_color);

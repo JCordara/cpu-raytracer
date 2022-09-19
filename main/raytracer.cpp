@@ -46,16 +46,16 @@ vec3 Raytracer::trace(const vec3& origin, const vec3& direction) {
     }
     if (list_tail == 0) return _empty_color;
     Intersection& closest_ixn = _intersection_pool[0];
-    vec3 init_diff = closest_ixn.point - _camera->get_pos();
+    vec3 init_diff = closest_ixn.get_point() - _camera->get_pos();
     float min_distance_sqr = init_diff.magnitude2();
     for (int i = 1; i < list_tail; i++) {
         Intersection& ixn = _intersection_pool[i];
-        vec3 diff = ixn.point - _camera->get_pos();
+        vec3 diff = ixn.get_point() - _camera->get_pos();
         float distance_sqr = diff.magnitude2();
         if (distance_sqr < min_distance_sqr) {
             min_distance_sqr = distance_sqr;
             closest_ixn = ixn;
         }
     }
-    return closest_ixn.color;
+    return closest_ixn.get_color();
 }

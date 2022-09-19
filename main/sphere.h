@@ -2,29 +2,35 @@
 #define SPHERE_H
 
 #include "../lib/vex3d.h"
-
-class Ray;
-class Intersection;
+#include "shape.h"
 
 /**
  * Contains the necessary information to define a sphere in 3D space. Includes
- * origin (center) of sphere and radius. Provides a method to calculate the 
+ * center of sphere and it's radius. Provides a method to calculate the 
  * intersection of a given ray with itself.
  */
-class Sphere {
+class Sphere : public Shape<Sphere> {
+private:
+
+    vec3 _center;
+    float _radius;
+    vec3 _color;
+
 public:
 
-    // TODO: Move to private and add any appropriate getters/setters
-    vec3 origin;
-    float radius;
-    float radius_sqr;
-    vec3 color;
-
     Sphere() = default;
-    Sphere(const vec3& origin, float radius, const vec3& color);
+    Sphere(const vec3& center, float radius, const vec3& color);
 
     Intersection check_intersection(const Ray& ray) const;
     
+    vec3 get_center();
+    vec3 get_color();
+    float get_radius();
+    
+    void set_center(vec3 new_center);
+    void set_color(vec3 new_color);
+    void set_radius(float new_radius);
+
     Sphere(const Sphere& other) = default;
     Sphere& operator=(const Sphere& rhs) = default;
     

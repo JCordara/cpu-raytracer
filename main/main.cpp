@@ -28,6 +28,7 @@
 #endif
 
 #include "scene.h"
+#include "shapes.h"
 #include "camera.h"
 #include "raytracer.h"
 
@@ -35,26 +36,26 @@ int main(int argc, char **argv) {
 
     // Create scene
     Scene scene;
-    scene.add_sphere(
+    scene.add_shape(new Sphere(
         vec3(0.0f, -100.0f, -102.0f),
         100.0f,
         vec3(50, 50, 50)
-    );
-    scene.add_sphere(
+    ));
+    scene.add_shape(new Sphere(
         vec3(0.0f, 0.0f, -12.0f),
         3.0f,
         vec3(10, 0, 230)
-    );
-    scene.add_sphere(
+    ));
+    scene.add_shape(new Sphere(
         vec3(3.0f, -1.5f, -7.0f),
         0.5f,
         vec3(75, 255, 150)
-    );
-    scene.add_sphere(
+    ));
+    scene.add_shape(new Sphere(
         vec3(-1.75f, 0.5f, -7.0f),
         0.5f,
         vec3(100, 40, 30)
-    );
+    ));
 
     float aspect_ratio = 16.0f / 9.0f;
     float fov = radians(80.0f);

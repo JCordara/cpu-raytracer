@@ -12,18 +12,21 @@ class Ray {
 private:
 
     vec3 _direction_normalized;
+    vec3 _origin;
+    vec3 _direction;
 
 public:
-
-    // TODO: Move to private and add getters/setters
-    vec3 origin;
-    vec3 direction;
 
     Ray(const vec3& origin, const vec3& direction);
 
     // Lazy calculation of normalized direction
     vec3 normalized_dir();
-    
+
+    vec3 get_origin() const;
+    vec3 get_direction() const;
+    void set_origin(const vec3& new_origin);
+    void set_direction(const vec3& new_direction);
+
 };
 
 #endif // RAY_H

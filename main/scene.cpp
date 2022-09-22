@@ -3,7 +3,13 @@
 
 using Iterator = Scene::Iterator;
 
-Scene::Scene() : _entity_count(0), _entities(nullptr) {}
+Scene::Scene() : 
+    _entity_count(0), 
+    _entities(nullptr),
+    _directional_light_dir(0.5f, -1.0f, -0.5f)
+{
+    _directional_light_dir = _directional_light_dir.normalize();
+}
 
 Entity* Scene::add_shape(Entity* s) {
     Entity** tmp_entities = new Entity*[_entity_count + 1];
@@ -15,6 +21,10 @@ Entity* Scene::add_shape(Entity* s) {
     _entities[_entity_count] = s;
     _entity_count += 1;
     return s;
+}
+
+vec3 Scene::directional_light_dir() const {
+    return _directional_light_dir;
 }
 
 Scene::~Scene() {

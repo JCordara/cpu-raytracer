@@ -15,6 +15,8 @@ private:
 
     int _entity_count;
     Entity** _entities;
+
+    vec3 _directional_light_dir;
     
 public:
 
@@ -22,6 +24,8 @@ public:
     ~Scene();
     
     Entity* add_shape(Entity* s);
+
+    vec3 directional_light_dir() const;
 
     // Forward iterator over shapes in scene
     class Iterator {

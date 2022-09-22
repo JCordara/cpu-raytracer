@@ -18,9 +18,16 @@ constexpr float _5_fact_inv = 1.0f / (5.0f * 4.0f * 3.0f * 2.0f);
 constexpr float _6_fact_inv = 1.0f / (6.0f * 5.0f * 4.0f * 3.0f * 2.0f);
 constexpr float _7_fact_inv = 1.0f / (7.0f * 6.0f * 5.0f * 4.0f * 3.0f * 2.0f);
 
+inline constexpr float max(float a, float b) {
+    return a > b ? a : b;
+}
+
+inline constexpr float min(float a, float b) {
+    return a < b ? a : b;
+}
+
 inline constexpr float abs(float x) {
-    if (x < 0) return -x;
-    else return x;
+    return x >= 0 ? x : -x;
 }
 
 inline constexpr float radians(float degrees) {

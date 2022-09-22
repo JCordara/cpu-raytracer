@@ -33,7 +33,7 @@ public:
     void set_empty_color(const vec3& color);
 
     unsigned char* trace_scene();
-    vec3 trace(const vec3& origin, const vec3& direction);
+    Intersection trace(const vec3& origin, const vec3& direction);
 
     // TODO: reflections and stuff
     void set_num_bounces(int n);

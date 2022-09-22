@@ -7,8 +7,8 @@
   - Generates 24bit color depth .bmp images
 - Basic raytracing model implemented
   - Curved image plane (allows 360+ degrees field of view)
-- No shading/lighting
-- Ray-sphere collisions
+  - Ray-sphere collisions
+  - No shading/lighting
 
 # Goals
 - Small binary size

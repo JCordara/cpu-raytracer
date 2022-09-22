@@ -4,11 +4,11 @@
   - mat3f operations
   - sin, cos, sqrt implementations
 - Custom image output library
-  - Generates 24bit color depth .bmp images
+  - Generates 24bit color depth bitmap images
 - Basic raytracing model implemented
   - Curved image plane (allows 360+ degrees field of view)
   - Ray-sphere collisions
-  - No shading/lighting
+  - Very simple lighting model
 
 # Goals
 - Small binary size
@@ -19,4 +19,4 @@
 - Handle reflections and refractions
 
 # Demo of current status
-![demo_img](images/curved_image_plane.bmp)
+![demo_img](images/basic_lighting.bmp)

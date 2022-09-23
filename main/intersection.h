@@ -14,13 +14,14 @@ private:
     vec3 _normal;
     vec3 _color;
     vec3 _point;
+    vec3 _direction;
 
 public:
     // TODO: Implement optional datatype to replace functionality of this field
     bool valid;
 
     Intersection() = default;
-    Intersection(vec3 point, vec3 normal, vec3 color);
+    Intersection(vec3 point, vec3 normal, vec3 color, vec3 direction);
 
     Intersection(const Intersection& other) = default;
     Intersection& operator=(const Intersection& rhs) = default;
@@ -28,9 +29,11 @@ public:
     vec3 normal();
     vec3 color();
     vec3 point();
+    vec3 direction();
     void set_normal(const vec3& new_normal);
     void set_color(const vec3& new_color);
     void set_point(const vec3& new_point);
+    void set_direction(const vec3& new_direction);
 
     // Returns an invalid intersection (ray and entity do not intersect)
     static Intersection none();

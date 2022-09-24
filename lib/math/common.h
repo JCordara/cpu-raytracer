@@ -9,6 +9,8 @@
 #define THREE_HALF_PI 4.7123889803846f
 #define TWO_PI        6.2831853071795f
 
+#define FLOAT_MAX     3.4028234660e38f
+
 constexpr float _rad_to_deg_ratio = 180.0f / PI;
 constexpr float _deg_to_rad_ratio = PI / 180.0f;
 constexpr float _2_fact_inv = 1.0f / (2.0f);

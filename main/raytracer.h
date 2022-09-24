@@ -2,6 +2,8 @@
 #define RAY_TRACER_H
 
 #include "../lib/vex3d.h"
+#include "../lib/optional.h"
+#include "../lib/vector.h"
 
 class Camera;
 class Scene;
@@ -21,8 +23,7 @@ private:
     vec3 _empty_color;
 
     unsigned char* _framebuffer;
-    Intersection* _intersection_pool;
-    const int MAX_OBJECTS = 1000;
+    vector<Intersection> _intersection_pool;
 
 public:
 
@@ -33,7 +34,7 @@ public:
     void set_empty_color(const vec3& color);
 
     unsigned char* trace_scene();
-    Intersection trace(const vec3& origin, const vec3& direction);
+    opt<Intersection> trace(const vec3& origin, const vec3& direction);
 
     // TODO: reflections and stuff
     void set_num_bounces(int n);

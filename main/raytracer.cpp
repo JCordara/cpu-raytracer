@@ -5,16 +5,16 @@
 #include "intersection.h"
 #include "sphere.h"
 
-Raytracer::Raytracer(const Camera* camera, const Scene* scene) {
-    this->_scene = scene;
-    this->_camera = camera;
-    this->_empty_color = vec3(22, 22, 22);
-    this->_intersection_pool = new Intersection[MAX_OBJECTS]; // Will change
+Raytracer::Raytracer(const Camera* camera, const Scene* scene) :
+    _scene(scene),
+    _camera(camera),
+    _empty_color(22, 22, 22),
+    _intersection_pool(1000)
+{
     this->_framebuffer = new unsigned char[_camera->pixel_count() * 3];
 }
 
 Raytracer::~Raytracer() {
-    delete[] _intersection_pool;
     delete[] _framebuffer;
 }
 
@@ -31,18 +31,24 @@ unsigned char* Raytracer::trace_scene() {
     for (const vec3& pixel : _camera->image_surface()) {
         // Get object surface color
         vec3 dir = pixel - _camera->pos();
-        Intersection ixn = trace(_camera->pos(), dir);
-        vec3 obj_color = ixn.color();
+        opt<Intersection> ixn = trace(_camera->pos(), dir);
+        if (!ixn) {
+            _framebuffer[fb_index++] = static_cast<unsigned char>(_empty_color.x);
+            _framebuffer[fb_index++] = static_cast<unsigned char>(_empty_color.y);
+            _framebuffer[fb_index++] = static_cast<unsigned char>(_empty_color.z);
+            continue;
+        }
+        Intersection& obj_ixn = ixn.unwrap();
+        vec3 obj_color = obj_ixn.color();
 
         // Get light amount
-        vec3 reflect_dir = dir.reflect(ixn.normal()).normalize();
-        Intersection reflect_ixn = trace(ixn.point(), reflect_dir);
+        vec3 reflect_dir = dir.reflect(obj_ixn.normal()).normalize();
+        // opt<Intersection> reflect_ixn = trace(obj_ixn.point(), reflect_dir);
         float brightness = reflect_dir.dot(-_scene->directional_light_dir());
         brightness = max(brightness, 0.1f);
         vec3 color = obj_color * (brightness);
 
         // Update pixel color value
-        if (!ixn.valid) color = _empty_color;
         _framebuffer[fb_index++] = static_cast<unsigned char>(color.x);
         _framebuffer[fb_index++] = static_cast<unsigned char>(color.y);
         _framebuffer[fb_index++] = static_cast<unsigned char>(color.z);
@@ -50,25 +56,30 @@ unsigned char* Raytracer::trace_scene() {
     return _framebuffer;
 }
 
-Intersection Raytracer::trace(const vec3& origin, const vec3& direction) {
-    int list_tail = 0;
+opt<Intersection> Raytracer::trace(const vec3& origin, const vec3& direction) {
+    _intersection_pool.clear();
     Ray ray(origin, direction);
     for (const auto& shape : *_scene) {
-        Intersection i = shape.check_intersection(ray);
-        if (i.valid) _intersection_pool[list_tail++] = i;
-    }
-    if (list_tail == 0) return Intersection::none();
-    Intersection& closest_ixn = _intersection_pool[0];
-    vec3 init_diff = closest_ixn.point() - _camera->pos();
-    float min_distance_sqr = init_diff.magnitude2();
-    for (int i = 1; i < list_tail; i++) {
-        Intersection& ixn = _intersection_pool[i];
-        vec3 diff = ixn.point() - _camera->pos();
-        float distance_sqr = diff.magnitude2();
-        if (distance_sqr < min_distance_sqr) {
-            min_distance_sqr = distance_sqr;
-            closest_ixn = ixn;
+        opt<Intersection> ixn_opt = shape->check_intersection(ray);
+
+        // If ray intersects, insert in order of closest
+        if (Intersection* ixn = ixn_opt.ptr()) {
+            unsigned int index = 0;
+            float this_dist = (ixn->point() - _camera->pos()).magnitude2();
+            while (index < _intersection_pool.size()) {
+                vec3 diff = _intersection_pool[index].point() - _camera->pos();
+                float other_dist = diff.magnitude2();
+                if (this_dist < other_dist) {
+                    break;
+                }
+                index++;
+            }
+            _intersection_pool.insert(index, *ixn);
         }
     }
-    return closest_ixn;
+
+    // If no intersections were added, return no intersection
+    if (_intersection_pool.size() == 0) return opt<Intersection>::none();
+    // Return closest intersection for now
+    return opt<Intersection>(_intersection_pool[0]);
 }

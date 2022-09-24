@@ -2,6 +2,7 @@
 #define SPHERE_H
 
 #include "../lib/vex3d.h"
+#include "../lib/optional.h"
 #include "shape.h"
 
 /**
@@ -21,7 +22,7 @@ public:
     Sphere() = default;
     Sphere(const vec3& center, float radius, const vec3& color);
 
-    Intersection check_intersection(const Ray& ray) const;
+    opt<Intersection> check_intersection(const Ray& ray) const;
     
     vec3 center();
     vec3 color();

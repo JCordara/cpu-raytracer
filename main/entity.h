@@ -1,6 +1,8 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include "../lib/optional.h"
+
 class Intersection;
 class Ray;
 
@@ -10,7 +12,7 @@ class Ray;
  */
 class Entity {
 public:
-    virtual Intersection check_intersection(const Ray& ray) const = 0;
+    virtual opt<Intersection> check_intersection(const Ray& ray) const = 0;
     virtual ~Entity() = default;
 };
 

@@ -8,7 +8,7 @@ Sphere::Sphere(const vec3& center, float radius, const vec3& color) {
     this->_color = color;
 }
 
-Intersection Sphere::check_intersection(const Ray& ray) const {
+opt<Intersection> Sphere::check_intersection(const Ray& ray) const {
     vec3 v = ray.origin() - _center;
     float a = ray.direction().dot(ray.direction());
     float b = 2.0f * ray.direction().dot(v);
@@ -16,7 +16,7 @@ Intersection Sphere::check_intersection(const Ray& ray) const {
     float disc = (b * b) - (4 * a * c);
 
     if (disc < 0) { // No collision
-        return Intersection::none();
+        return opt<Intersection>::none();
     }
 
     float disc_sqrt = sqrt(disc);
@@ -24,7 +24,7 @@ Intersection Sphere::check_intersection(const Ray& ray) const {
     float t1 = (-b - disc_sqrt) / (2 * a);
     
     if (t0 < 0 && t1 < 0) { // Collision is behind camera
-        return Intersection::none();
+        return opt<Intersection>::none();
     }
 
     float t = 0;
@@ -34,7 +34,7 @@ Intersection Sphere::check_intersection(const Ray& ray) const {
     vec3 intersection_point = ray.origin() + (ray.direction() * t);
     vec3 normal = intersection_point - _center;
     normal = normal.normalize();
-    return Intersection(intersection_point, normal, _color);
+    return opt<Intersection>(Intersection(intersection_point, normal, _color, ray.direction()));
 }
 
 vec3 Sphere::center() {

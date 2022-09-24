@@ -2,6 +2,7 @@
 #include "eztest_macros.h"
 
 #include "../lib/vex3d.h"
+#include "../lib/vector.h"
 
 void print_mat3(const mat3& m, bool newline = true) {
     std::cout << "| " << m[0][0] << ", " << m[0][1] << ", " << m[0][2];
@@ -23,5 +24,6 @@ int main() {
     #include "test_common_math.hpp"
     #include "test_vec3f.hpp"
     #include "test_mat3.hpp"
+    #include "test_vector.hpp"
     return eztest::test_main();
 }

@@ -1,7 +1,7 @@
 # Current status
 - Custom 3D vector math library
-  - vec3f operations
-  - mat3f operations
+  - vec3f, vec4f operations
+  - mat3, mat4 operations
   - sin, cos, sqrt implementations
 - Custom image output library
   - Generates 24bit color depth bitmap images
@@ -12,7 +12,8 @@
 
 # Goals
 - Small binary size
-  - No external libraries (STL, GLM, etc.)
+  - Only C library function calls
+  - No external vector math libraries
 - Fast
   - Multithreaded image generation
   - Optimized intersection algorithms

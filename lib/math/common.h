@@ -20,6 +20,8 @@ constexpr float _5_fact_inv = 1.0f / (5.0f * 4.0f * 3.0f * 2.0f);
 constexpr float _6_fact_inv = 1.0f / (6.0f * 5.0f * 4.0f * 3.0f * 2.0f);
 constexpr float _7_fact_inv = 1.0f / (7.0f * 6.0f * 5.0f * 4.0f * 3.0f * 2.0f);
 
+constexpr float nan = NaN;
+
 inline constexpr float max(float a, float b) {
     return a > b ? a : b;
 }
@@ -38,6 +40,10 @@ inline constexpr float radians(float degrees) {
 
 inline constexpr float degrees(float radians) {
     return _rad_to_deg_ratio * radians;
+}
+
+inline bool float_eq(const float& x, const float& y) {
+    return (x < (y + 0.0001f)) && (x > (y - 0.0001f));
 }
 
 inline constexpr float _sin_impl(float radians) {

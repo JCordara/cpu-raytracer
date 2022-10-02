@@ -212,6 +212,14 @@ mat3 mat3::scale(float factor) {
     return mat3(factor);
 }
 
+mat3 mat3::scale(const vec3f& factors) {
+    return mat3(
+        factors.x,  0.0f,      0.0f,
+          0.0f,    factors.y,  0.0f,
+          0.0f,      0.0f,    factors.z
+    );
+}
+
 mat3 mat3::scale_x(float factor) {
     return mat3(
         factor, 0.0f, 0.0f,
@@ -318,4 +326,33 @@ mat3& mat3::operator=(mat3&& rhs) {
         rhs._values[8] = 0.0f;
     }
     return *this;
+}
+
+
+bool mat3::operator==(const mat3& other) {
+    return (
+        float_eq(_values[0], other._values[0])  &&
+        float_eq(_values[1], other._values[1])  &&
+        float_eq(_values[2], other._values[2])  &&
+        float_eq(_values[3], other._values[3])  &&
+        float_eq(_values[4], other._values[4])  &&
+        float_eq(_values[5], other._values[5])  &&
+        float_eq(_values[6], other._values[6])  &&
+        float_eq(_values[7], other._values[7])  &&
+        float_eq(_values[8], other._values[8])
+    );
+}
+
+bool mat3::operator!=(const mat3& other) {
+    return !(
+        float_eq(_values[0], other._values[0])  &&
+        float_eq(_values[1], other._values[1])  &&
+        float_eq(_values[2], other._values[2])  &&
+        float_eq(_values[3], other._values[3])  &&
+        float_eq(_values[4], other._values[4])  &&
+        float_eq(_values[5], other._values[5])  &&
+        float_eq(_values[6], other._values[6])  &&
+        float_eq(_values[7], other._values[7])  &&
+        float_eq(_values[8], other._values[8])
+    );
 }

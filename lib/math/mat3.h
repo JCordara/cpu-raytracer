@@ -30,6 +30,7 @@ public:
     static mat3 rot_y(float /* in radians */ angle, bool col_major=false);
     static mat3 rot_z(float /* in radians */ angle, bool col_major=false);
     static mat3 scale(float factor);
+    static mat3 scale(const vec3f& factors);
     static mat3 scale_x(float factor);
     static mat3 scale_y(float factor);
     static mat3 scale_z(float factor);
@@ -44,6 +45,9 @@ public:
     // Copy/move assignments
     mat3& operator=(const mat3& rhs);
     mat3& operator=(mat3&& rhs);
+
+    bool operator==(const mat3& other);
+    bool operator!=(const mat3& other);
 
     // Rule of 5
     ~mat3() = default;

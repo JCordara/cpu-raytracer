@@ -242,11 +242,13 @@ vec3f vec3f::operator-() const {
 
 // Element access
 
-float vec3f::operator[](int ix) {
+float& vec3f::operator[](int ix) {
     if (ix == 0) return x;
     if (ix == 1) return y;
     if (ix == 2) return z;
-    else return NaN;
+    
+    // Unexpected behavior, need to implement exceptions or something
+    else return x;
 }
 
 
@@ -324,22 +326,18 @@ vec3f& vec3f::operator=(vec3f&& rhs) {
 // Equality operator
 
 bool vec3f::operator==(const vec3f& rhs) {
-    const float eps = 0.00001f;
-    if (abs(this->x - rhs.x) > eps) return false;
-    if (abs(this->y - rhs.y) > eps) return false;
-    if (abs(this->z - rhs.z) > eps) return false;
-    return true;
+    return (
+        float_eq(this->x, rhs.x) &&
+        float_eq(this->y, rhs.y) &&
+        float_eq(this->z, rhs.z)
+    );
 }
 
 bool vec3f::operator!=(const vec3f& rhs) {
-    const float eps = 0.00001f;
-    if (abs(this->x - rhs.x) < eps) {
-        if (abs(this->y - rhs.y) < eps) {
-            if (abs(this->z - rhs.z) < eps) {
-                return false;
-            }
-        }
-    }
-    return true;
+    return !(
+        float_eq(this->x, rhs.x) &&
+        float_eq(this->y, rhs.y) &&
+        float_eq(this->z, rhs.z)
+    );
 }
 

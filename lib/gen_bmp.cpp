@@ -2,35 +2,36 @@
 
 Bitmap::BitmapFileHeader::BitmapFileHeader (int pixel_data_size) {
    this->file_size = 
-       pixel_data_offset + static_cast<uint32_t>(pixel_data_size); 
+       pixel_data_offset + static_cast<unsigned int>(pixel_data_size); 
 }
 
-void Bitmap::BitmapFileHeader::write_to_stream(std::ofstream &fout) {
-    fout.write((char*)&this->bitmap_signature_bytes, 2); 
-    fout.write((char*)&this->file_size, sizeof(uint32_t)); 
-    fout.write((char*)&this->reserved_bytes, sizeof(uint32_t)); 
-    fout.write((char*)&this->pixel_data_offset, sizeof(uint32_t)); 
+void Bitmap::BitmapFileHeader::write_to_stream(FILE* p_file) {
+    fwrite(bitmap_signature_bytes, sizeof(unsigned char), 2, p_file); 
+    fwrite(&file_size, sizeof(unsigned int), 1, p_file); 
+    fwrite(&reserved_bytes, sizeof(unsigned int), 1, p_file); 
+    fwrite(&pixel_data_offset, sizeof(unsigned int), 1, p_file); 
 }
 
 
 Bitmap::BitmapInfoHeader::BitmapInfoHeader (int width, int height) {
-    this->bitmap_width = static_cast<int32_t>(width);
-    this->bitmap_height = static_cast<int32_t>(height);
+    this->bitmap_width = static_cast<int>(width);
+    this->bitmap_height = static_cast<int>(height);
 }
 
-void Bitmap::BitmapInfoHeader::write_to_stream(std::ofstream &fout) {
-    fout.write((char*)&this->info_header_size, sizeof(uint32_t));
-    fout.write((char*)&this->bitmap_width, sizeof(int32_t));
-    fout.write((char*)&this->bitmap_height, sizeof(int32_t));
-    fout.write((char*)&this->color_planes, sizeof(uint16_t));
-    fout.write((char*)&this->color_depth, sizeof(uint16_t));
-    fout.write((char*)&this->compression, sizeof(uint32_t));
-    fout.write((char*)&this->bitmap_data_size_raw, sizeof(uint32_t));
-    fout.write((char*)&this->horizontal_resolution, sizeof(int32_t));
-    fout.write((char*)&this->vertical_resolution, sizeof(int32_t));
-    fout.write((char*)&this->color_table_entries, sizeof(uint32_t));
-    fout.write((char*)&this->important_colors, sizeof(uint32_t));
+void Bitmap::BitmapInfoHeader::write_to_stream(FILE* p_file) {
+    fwrite(&info_header_size, sizeof(unsigned int), 1, p_file);
+    fwrite(&bitmap_width, sizeof(int), 1, p_file);
+    fwrite(&bitmap_height, sizeof(int), 1, p_file);
+    fwrite(&color_planes, sizeof(unsigned short), 1, p_file);
+    fwrite(&color_depth, sizeof(unsigned short), 1, p_file);
+    fwrite(&compression, sizeof(unsigned int), 1, p_file);
+    fwrite(&bitmap_data_size_raw, sizeof(unsigned int), 1, p_file);
+    fwrite(&horizontal_resolution, sizeof(int), 1, p_file);
+    fwrite(&vertical_resolution, sizeof(int), 1, p_file);
+    fwrite(&color_table_entries, sizeof(unsigned int), 1, p_file);
+    fwrite(&important_colors, sizeof(unsigned int), 1, p_file);
 }
+
 
 const byte* Bitmap::reorder_rgb(const byte* color_array, int size) {
     byte* arr = new byte[size];
@@ -53,13 +54,14 @@ void Bitmap::from_color_array (
     BitmapFileHeader file_header(array_size);
     BitmapInfoHeader info_header(width,  height);
 
-    std::ofstream output_file(filename, std::ios::out | std::ios::binary);
+    FILE* p_file = fopen(filename,"wb");
+    if(p_file == NULL) return;
 
-    file_header.write_to_stream(output_file);
-    info_header.write_to_stream(output_file);
-    output_file.write(reinterpret_cast<const char*>(reordered_color_array), array_size);
+    file_header.write_to_stream(p_file);
+    info_header.write_to_stream(p_file);
+    fwrite(reordered_color_array, sizeof(byte), array_size, p_file);
+    fclose(p_file);
 
-    output_file.close();
     delete[] reordered_color_array;
 }
 

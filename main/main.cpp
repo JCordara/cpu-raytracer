@@ -1,39 +1,41 @@
-#include "../lib/gen_bmp.h"
-#include "../lib/vex3d.h"
-
-#ifdef _DEBUG
-    #include <iostream>
-    #define cout std::cout
-
-    void print_vec3(const vec3& v, bool newline = true) {
-        cout << "(" << v.x << ", " << v.y << ", " << v.z << ") ";
-        if (newline) {
-            cout << "\n";
-        }
-    }
-
-    void print_mat3(const mat3& m, bool newline = true) {
-        cout << "| " << m[0][0] << ", " << m[0][1] << ", " << m[0][2];
-        cout << (newline ? " |\n" : ", ");
-        cout << "| " << m[1][0] << ", " << m[1][1] << ", " << m[1][2];
-        cout << (newline ? " |\n" : ", ");
-        cout << "| " << m[2][0] << ", " << m[2][1] << ", " << m[2][2];
-        cout << (newline ? " |\n" : " ");
-    }
-
-#else
-    #define cout //
-    void print_vec3(const vec3& v, bool newline = true) {}
-    void print_mat3(const mat3& m, bool newline = true) {}
-#endif
+/**
+ * Program entry point.
+ * Currently defines a demo scene and generates a bitmap image. 
+ */
 
 #include "scene.h"
 #include "shapes.h"
 #include "camera.h"
 #include "raytracer.h"
 
-int main(int argc, char **argv) {
+#include "../lib/gen_bmp.h"
+#include "../lib/vex3d.h"
 
+#ifdef _DEBUG
+    #include <cstdio>
+    #define printf printf
+
+    void print_vec3(const vec3& v, bool newline = true) {
+        printf("(%.2f, %.2f, %.2f)%s", v.x, v.y, v.x, newline ? "\n" : "");
+    }
+
+    void print_mat3(const mat3& m, bool newline = true) {
+        printf("| %.2f, %.2f, %.2f %s", m[0][0], m[0][1], m[0][2], newline ? "|\n" : ", ");
+        printf("| %.2f, %.2f, %.2f %s", m[1][0], m[1][1], m[1][2], newline ? "|\n" : ", ");
+        printf("| %.2f, %.2f, %.2f %s", m[2][0], m[2][1], m[2][2], newline ? "|\n" : ", ");
+    }
+#else // Don't include cstdio, saves about 1KB
+    #define printf //
+    void print_vec3(const vec3& v, bool newline = true) {}
+    void print_mat3(const mat3& m, bool newline = true) {}
+
+    namespace __gnu_cxx { // Non-overrided function bloats binary
+        void __verbose_terminate_handler() {for (;;);}
+    }
+#endif
+
+
+int main(int argc, char **argv) {
     // Create scene
     Scene scene;
     scene.add_shape(new Sphere(
@@ -56,7 +58,7 @@ int main(int argc, char **argv) {
         0.5f,
         vec3(100, 40, 30)
     ));
-
+    
     float aspect_ratio = 16.0f / 9.0f;
     float fov = radians(80.0f);
     int vertical_resolution = 1080;
@@ -72,7 +74,7 @@ int main(int argc, char **argv) {
     // Generate image
     const unsigned char* framebuffer = raytracer.trace_scene();
     Bitmap::from_color_array(framebuffer, camera.h_res(), camera.v_res());
-    
+
     return 0;
 }
 

@@ -65,13 +65,9 @@ opt<Intersection> Raytracer::trace(const vec3& origin, const vec3& direction) {
         // If ray intersects, insert in order of closest
         if (Intersection* ixn = ixn_opt.ptr()) {
             unsigned int index = 0;
-            float this_dist = (ixn->point() - _camera->pos()).magnitude2();
             while (index < _intersection_pool.size()) {
-                vec3 diff = _intersection_pool[index].point() - _camera->pos();
-                float other_dist = diff.magnitude2();
-                if (this_dist < other_dist) {
+                if (ixn->dist_sqr() < _intersection_pool[index].dist_sqr())
                     break;
-                }
                 index++;
             }
             _intersection_pool.insert(index, *ixn);
@@ -80,6 +76,7 @@ opt<Intersection> Raytracer::trace(const vec3& origin, const vec3& direction) {
 
     // If no intersections were added, return no intersection
     if (_intersection_pool.size() == 0) return opt<Intersection>::none();
+    
     // Return closest intersection for now
     return opt<Intersection>(_intersection_pool[0]);
 }

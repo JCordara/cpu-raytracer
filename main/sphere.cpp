@@ -33,8 +33,17 @@ opt<Intersection> Sphere::check_intersection(const Ray& ray) const {
 
     vec3 intersection_point = ray.origin() + (ray.direction() * t);
     vec3 normal = intersection_point - _center;
+    float dist_sqr = normal.magnitude2();
     normal = normal.normalize();
-    return opt<Intersection>(Intersection(intersection_point, normal, _color, ray.direction()));
+    return opt<Intersection>(
+        Intersection(
+            intersection_point, 
+            normal, 
+            _color, 
+            ray.direction(),
+            dist_sqr
+        )
+    );
 }
 
 vec3 Sphere::center() {

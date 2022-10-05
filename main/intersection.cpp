@@ -1,26 +1,36 @@
 #include "intersection.h"
 
-Intersection::Intersection(vec3 point, vec3 normal, vec3 color, vec3 direction) : 
+Intersection::Intersection(
+    const vec3& point, 
+    const vec3& normal,
+    const vec3& color,
+    const vec3& direction,
+    float dist_sqr) : 
     _point(point),
     _normal(normal), 
     _color(color),
-    _direction(direction)
+    _direction(direction),
+    _dist_sqr(dist_sqr)
 {}
 
-vec3 Intersection::normal() {
+const vec3& Intersection::normal() const {
     return _normal;
 }
 
-vec3 Intersection::color() {
+const vec3& Intersection::color() const {
     return _color;
 }
 
-vec3 Intersection::point() {
+const vec3& Intersection::point() const {
     return _point;
 }
 
-vec3 Intersection::direction() {
+const vec3& Intersection::direction() const {
     return _direction;
+}
+
+const float& Intersection::dist_sqr() const {
+    return _dist_sqr;
 }
 
 void Intersection::set_normal(const vec3& new_normal) {
@@ -37,5 +47,9 @@ void Intersection::set_point(const vec3& new_point) {
 
 void Intersection::set_direction(const vec3& new_direction) {
     _direction = new_direction;
+}
+
+void Intersection::set_dist_sqr(const float& new_dist_sqr) {
+    _direction = new_dist_sqr;
 }
 

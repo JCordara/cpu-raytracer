@@ -18,6 +18,7 @@ private:
     int _h_res;
     int _v_res;
 
+    mat4 _transform;
     const float _radius = 1.0f;
     float _height;
 
@@ -32,10 +33,12 @@ public:
     void set_fov(float new_fov);
     void set_h_res(int new_h_res);
     void set_v_res(int new_v_res);
+    void set_transform(const mat4& new_transform);
 
     float fov() const;
     int h_res() const;
     int v_res() const;
+    mat4 transform() const;
     int pixel_count() const;
 
     /**

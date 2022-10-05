@@ -65,6 +65,7 @@ int main(int argc, char **argv) {
 
     // Camera
     Camera camera(aspect_ratio, fov, vertical_resolution);
+    camera.set_pos(vec3(0.0f, 0.0f, 0.0f));
 
     // Raytracer
     Raytracer raytracer(&camera, &scene);

@@ -16,6 +16,7 @@ private:
     vec3 _pos;
     // TODO: Add orientation
     // vec3 _up;
+    mat4 _transform;
 
     ImageSurface _image_surface;
 
@@ -24,10 +25,8 @@ private:
 
 public:
 
-    Camera(float aspect_ratio, float fov);
-
     // Only vertical resolution is needed. ex. 1080 => 1920x1080
-    Camera(float aspect_ratio, float fov, int vertical_resolution);
+    Camera(float aspect_ratio, float fov, int vertical_resolution = 1080);
 
     void set_pos(const vec3& new_pos);
     // void look_at(const vec3& target);
@@ -36,7 +35,8 @@ public:
     void set_h_res(int new_h_res);
     void set_v_res(int new_v_res);
 
-    vec3 pos() const;
+    const vec3& pos() const;
+    const mat4& transform() const;
     float apsect_ratio() const;
     float fov() const;
     int h_res() const;

@@ -67,7 +67,6 @@ int ImageSurface::pixel_count() const {
 }
 
 void ImageSurface::_generate_surface() {
-    print("Starting surface generation\n");
     for (int row = 0; row < _v_res; row++) {
         for (int col = 0; col < _h_res; col++) {
             unsigned int index = (row * _h_res) + col;
@@ -81,7 +80,6 @@ void ImageSurface::_generate_surface() {
             _pixels[index] = _transform * pixel_coord;
         }
     }
-    print("Finished surface generation\n");
 }
 
 PixelIterator::PixelIterator(vec3* ptr): m_ptr(ptr) {}

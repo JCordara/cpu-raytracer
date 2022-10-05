@@ -32,6 +32,7 @@ public:
     static mat3 rot_z(float /* in radians */ angle, bool col_major=false);
     static mat3 scale(float factor);
     static mat3 scale(const vec3& factors);
+    static mat3 scale(float x, float y, float z);
     static mat3 scale_x(float factor);
     static mat3 scale_y(float factor);
     static mat3 scale_z(float factor);

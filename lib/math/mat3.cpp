@@ -160,6 +160,14 @@ mat3 mat3::scale(float factor) {
     return mat3(factor);
 }
 
+mat3 mat3::scale(float x, float y, float z) {
+    return mat3(
+         x,   0.0f, 0.0f,
+        0.0f,  y,   0.0f,
+        0.0f, 0.0f,  z
+    );
+}
+
 mat3 mat3::scale(const vec3& factors) {
     return mat3(
         factors.x,  0.0f,      0.0f,

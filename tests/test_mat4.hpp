@@ -3,34 +3,6 @@
  * Using custom eztest framework, see eztest_macros.h for implementation detail
  */
 
-TEST_START(test_mat4_equality)
-
-    mat4 m0(
-        0.0f,  1.0f,  2.0f,  3.0f,
-        4.0f,  5.0f,  6.0f,  7.0f,
-        8.0f,  9.0f,  10.0f, 11.0f,
-        12.0f, 13.0f, 14.0f, 15.0f
-    );
-    mat4 m1(
-        0.0f,  1.0f,  2.0f,  3.0f,
-        4.0f,  5.0f,  6.0f,  7.0f,
-        8.0f,  9.0f,  10.0f, 11.0f,
-        12.0f, 13.0f, 14.0f, 15.0f
-    );
-    mat4 m2(
-        1.0f,  1.0f,  2.0f,  3.0f,
-        3.0f,  5.0f,  5.0f,  7.0f,
-        8.0f,  9.5f,  10.0f, 11.0f,
-        12.0f, 13.0f, 14.0f, 15.0f
-    );
-
-    CHECK_TRUE(m0 == m1, "Equality operator returns false on equivalent matrices")
-    CHECK_FALSE(m0 == m2, "Equality operator returns true on non-equivalent matrices")
-    CHECK_FALSE(m0 != m1, "Inequality operator returns true on equivalent matrices")
-    CHECK_TRUE(m0 != m2, "Inequality operator returns false on non-equivalent matrices")
-
-TEST_END(test_mat4_equality)
-
 
 TEST_START(test_mat4_elementwise_constructor)
 
@@ -59,6 +31,35 @@ TEST_START(test_mat4_elementwise_constructor)
     CHECK_EQ_EPS(m[3][3], 15.0f, "Sixteenth element incorrect"  )
 
 TEST_END(test_mat4_elementwise_constructor)
+
+
+TEST_START(test_mat4_equality)
+
+    mat4 m0(
+        0.0f,  1.0f,  2.0f,  3.0f,
+        4.0f,  5.0f,  6.0f,  7.0f,
+        8.0f,  9.0f,  10.0f, 11.0f,
+        12.0f, 13.0f, 14.0f, 15.0f
+    );
+    mat4 m1(
+        0.0f,  1.0f,  2.0f,  3.0f,
+        4.0f,  5.0f,  6.0f,  7.0f,
+        8.0f,  9.0f,  10.0f, 11.0f,
+        12.0f, 13.0f, 14.0f, 15.0f
+    );
+    mat4 m2(
+        1.0f,  1.0f,  2.0f,  3.0f,
+        3.0f,  5.0f,  5.0f,  7.0f,
+        8.0f,  9.5f,  10.0f, 11.0f,
+        12.0f, 13.0f, 14.0f, 15.0f
+    );
+
+    CHECK_TRUE(m0 == m1, "Equality operator returns false on equivalent matrices")
+    CHECK_FALSE(m0 == m2, "Equality operator returns true on non-equivalent matrices")
+    CHECK_FALSE(m0 != m1, "Inequality operator returns true on equivalent matrices")
+    CHECK_TRUE(m0 != m2, "Inequality operator returns false on non-equivalent matrices")
+
+TEST_END(test_mat4_equality)
 
 
 TEST_START(test_mat4_construction)

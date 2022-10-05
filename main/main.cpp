@@ -3,6 +3,8 @@
  * Currently defines a demo scene and generates a bitmap image. 
  */
 
+#include "debug.h"
+
 #include "scene.h"
 #include "shapes.h"
 #include "camera.h"
@@ -10,29 +12,6 @@
 
 #include "../lib/gen_bmp.h"
 #include "../lib/vex3d.h"
-
-#ifdef _DEBUG
-    #include <cstdio>
-    #define printf printf
-
-    void print_vec3(const vec3& v, bool newline = true) {
-        printf("(%.2f, %.2f, %.2f)%s", v.x, v.y, v.x, newline ? "\n" : "");
-    }
-
-    void print_mat3(const mat3& m, bool newline = true) {
-        printf("| %.2f, %.2f, %.2f %s", m[0][0], m[0][1], m[0][2], newline ? "|\n" : ", ");
-        printf("| %.2f, %.2f, %.2f %s", m[1][0], m[1][1], m[1][2], newline ? "|\n" : ", ");
-        printf("| %.2f, %.2f, %.2f %s", m[2][0], m[2][1], m[2][2], newline ? "|\n" : ", ");
-    }
-#else // Don't include cstdio, saves about 1KB
-    #define printf //
-    void print_vec3(const vec3& v, bool newline = true) {}
-    void print_mat3(const mat3& m, bool newline = true) {}
-
-    namespace __gnu_cxx { // Non-overrided function bloats binary
-        void __verbose_terminate_handler() {for (;;);}
-    }
-#endif
 
 
 int main(int argc, char **argv) {

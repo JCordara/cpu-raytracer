@@ -155,7 +155,7 @@ mat4::mat4(float diagonal) {
 }
 
 // Math operations
-mat4 mat4::operator*(const mat4& rhs) {
+mat4 mat4::operator*(const mat4& rhs) const {
     return mat4(
         (_values[0] * rhs._values[0])  + (_values[1] * rhs._values[4]) + 
         (_values[2] * rhs._values[8])  + (_values[3] * rhs._values[12]),
@@ -195,7 +195,7 @@ mat4 mat4::operator*(const mat4& rhs) {
     );
 }
 
-vec4f mat4::operator*(const vec4f& rhs) {
+vec4f mat4::operator*(const vec4f& rhs) const {
     return vec4f(
         (_values[0]  * rhs.x) + (_values[1]  * rhs.y) + 
         (_values[2]  * rhs.z) + (_values[3]  * rhs.w),
@@ -211,7 +211,7 @@ vec4f mat4::operator*(const vec4f& rhs) {
     );
 }
 
-vec3f mat4::operator*(const vec3f& rhs) {
+vec3f mat4::operator*(const vec3f& rhs) const {
     return vec3f(
         (_values[0]  * rhs.x) + (_values[1]  * rhs.y) + 
         (_values[2]  * rhs.z) + (_values[3]  * 1.0f),

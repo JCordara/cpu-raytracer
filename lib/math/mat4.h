@@ -22,10 +22,10 @@ public:
     mat4(float diagonal);
 
     // Math operations
-    mat4  operator*(const mat4&  rhs);
+    mat4  operator*(const mat4&  rhs) const;
     // Vector multiplication (only allow mat * vec, not vec * mat)
-    vec4f operator*(const vec4f& rhs);
-    vec3f operator*(const vec3f& rhs);
+    vec4f operator*(const vec4f& rhs) const;
+    vec3f operator*(const vec3f& rhs) const;
     
     // Generator functions
     static mat4 rot_x(float /* in radians */ angle, bool col_major=false);

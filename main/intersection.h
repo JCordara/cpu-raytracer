@@ -17,8 +17,6 @@ private:
     vec3 _direction;
 
 public:
-    // TODO: Implement optional datatype to replace functionality of this field
-    bool valid;
 
     Intersection() = default;
     Intersection(vec3 point, vec3 normal, vec3 color, vec3 direction);
@@ -35,8 +33,6 @@ public:
     void set_point(const vec3& new_point);
     void set_direction(const vec3& new_direction);
 
-    // Returns an invalid intersection (ray and entity do not intersect)
-    static Intersection none();
 };
 
 #endif // INTERSECTION_H

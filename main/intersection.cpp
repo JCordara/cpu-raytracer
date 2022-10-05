@@ -4,15 +4,8 @@ Intersection::Intersection(vec3 point, vec3 normal, vec3 color, vec3 direction) 
     _point(point),
     _normal(normal), 
     _color(color),
-    _direction(direction),
-    valid(true) 
+    _direction(direction)
 {}
-
-Intersection Intersection::none() {
-    Intersection empty_intersection;
-    empty_intersection.valid = false;
-    return empty_intersection;
-}
 
 vec3 Intersection::normal() {
     return _normal;

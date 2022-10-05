@@ -34,6 +34,7 @@ public:
 
     // Element access
     float& operator[](int ix);
+    const float& operator[](int ix) const;
 
     // Copy/move constructors
     vec3f(const vec3f &other);

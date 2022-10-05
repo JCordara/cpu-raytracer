@@ -34,7 +34,8 @@ public:
     vec4f(int   xyzw[4]);
 
     // Element access
-    float operator[](int ix);
+    float& operator[](int ix);
+    const float& operator[](int ix) const;
 
     // Copy/move constructors
     vec4f(const vec4f &other);

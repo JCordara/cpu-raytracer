@@ -13,12 +13,9 @@ Camera::Camera(float aspect_ratio, float fov, int vertical_resolution):
 
 void Camera::set_pos(const vec3& new_pos) {
     _pos = new_pos;
-    _transform = mat4(
-        _transform[0][0], _transform[0][1], _transform[0][2], _pos.x,
-        _transform[1][0], _transform[1][1], _transform[1][2], _pos.y,
-        _transform[2][0], _transform[2][1], _transform[2][2], _pos.z,
-        _transform[3][0], _transform[3][1], _transform[3][2],  1.0f
-    );
+    _transform[0][3] = _pos.x;
+    _transform[1][3] = _pos.y;
+    _transform[2][3] = _pos.z;
     _image_surface.set_transform(_transform);
 }
 

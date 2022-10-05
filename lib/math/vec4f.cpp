@@ -276,14 +276,23 @@ vec4f vec4f::operator-() const {
 
 // Element access
 
-float vec4f::operator[](int ix) {
+float& vec4f::operator[](int ix) {
+    static float nan = NaN;
     if (ix == 0) return x;
     if (ix == 1) return y;
     if (ix == 2) return z;
     if (ix == 3) return w;
-    else return NaN;
+    else return nan;
 }
 
+const float& vec4f::operator[](int ix) const {
+    static float nan = NaN;
+    if (ix == 0) return x;
+    if (ix == 1) return y;
+    if (ix == 2) return z;
+    if (ix == 3) return w;
+    else return nan;
+}
 
 
 // Constructors

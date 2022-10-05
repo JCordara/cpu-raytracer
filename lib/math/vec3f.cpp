@@ -243,14 +243,20 @@ vec3f vec3f::operator-() const {
 // Element access
 
 float& vec3f::operator[](int ix) {
+    static float nan = NaN;
     if (ix == 0) return x;
     if (ix == 1) return y;
-    if (ix == 2) return z;
-    
-    // Unexpected behavior, need to implement exceptions or something
-    else return x;
+    if (ix == 2) return z;    
+    else return nan;
 }
 
+const float& vec3f::operator[](int ix) const {
+    static float nan = NaN;
+    if (ix == 0) return x;
+    if (ix == 1) return y;
+    if (ix == 2) return z;    
+    else return nan;
+}
 
 
 // Constructors

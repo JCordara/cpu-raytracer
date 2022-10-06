@@ -213,7 +213,6 @@ float vec3f::magnitude() const {
 }
 
 float vec3f::magnitude2() const {
-    // Apparently this is the fasted sqrt algorithm out there
     return (
         (this->x * this->x) +
         (this->y * this->y) +

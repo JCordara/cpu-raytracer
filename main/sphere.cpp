@@ -15,18 +15,17 @@ opt<Intersection> Sphere::check_intersection(const Ray& ray) const {
     float c = v.dot(v) - (_radius * _radius);
     float disc = (b * b) - (4 * a * c);
 
-    if (disc < 0) { // No collision
-        return opt<Intersection>::none();
-    }
+    // No collision
+    if (disc < 0) return opt<Intersection>::none();
 
     float disc_sqrt = sqrt(disc);
     float t0 = (-b + disc_sqrt) / (2 * a);
     float t1 = (-b - disc_sqrt) / (2 * a);
     
-    if (t0 < 0 && t1 < 0) { // Collision is behind camera
-        return opt<Intersection>::none();
-    }
+    // Collision is behind ray origin
+    if (t0 < EPSILON && t1 < EPSILON) return opt<Intersection>::none();
 
+    // Take smallest non-negative parameter value
     float t = 0;
     if (t0 < t1 && t0 >= 0) t = t0;
     else t = t1;

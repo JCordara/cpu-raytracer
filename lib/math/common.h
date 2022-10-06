@@ -2,7 +2,7 @@
 #define COMMON_MATH_H
 
 #define NaN           1.175494351e-38f
-#define EPSILON       0.100000000e-10f
+#define EPSILON       1.0000000000e-4f
 #define QUARTER_PI    0.7853981633974f
 #define HALF_PI       1.5707963267948f
 #define PI            3.1415926535897f

@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
     // Create scene
     Scene scene;
     scene.add_shape(new Sphere(
-        vec3(0.0f, -100.0f, -102.0f),
+        vec3(0.0f, -90.0f, -60.0f),
         100.0f,
         vec3(50, 50, 50)
     ));
@@ -28,13 +28,13 @@ int main(int argc, char **argv) {
         vec3(10, 0, 230)
     ));
     scene.add_shape(new Sphere(
-        vec3(3.0f, -1.5f, -7.0f),
+        vec3(3.0f, -1.0f, -9.0f),
         0.5f,
         vec3(75, 255, 150)
     ));
     scene.add_shape(new Sphere(
-        vec3(-1.75f, 0.5f, -7.0f),
-        0.5f,
+        vec3(-2.5f, 1.5f, -10.0f),
+        1.0f,
         vec3(100, 40, 30)
     ));
     
@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
 
     // Camera
     Camera camera(aspect_ratio, fov, vertical_resolution);
-    camera.set_pos(vec3(0.0f, 0.0f, 0.0f));
+    camera.set_pos(vec3(0.0f, -0.75f, 3.0f));
 
     // Raytracer
     Raytracer raytracer(&camera, &scene);

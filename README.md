@@ -21,4 +21,4 @@
 - Handle reflections and refractions
 
 # Demo of current status
-![demo_img](images/basic_reflections.bmp)
+![demo_img](images/03_basic_reflections.bmp)

@@ -3,14 +3,15 @@
   - vec3f, vec4f operations
   - mat3, mat4 operations
   - sin, cos, sqrt implementations
-- Custom image output library
-  - Generates 24bit color depth bitmap images
 - Basic raytracing model implemented
   - Curved image plane (allows 360+ degrees field of view)
   - Ray-sphere collisions
-  - Very simple lighting model
+  - Basic reflections
+  - Very basic lighting model
+- Custom image output library
+  - Generates 24bit color depth bitmap images
 
-# Goals
+# End goals
 - Small binary size
   - Only C library function calls
   - No external vector math libraries
@@ -20,4 +21,4 @@
 - Handle reflections and refractions
 
 # Demo of current status
-![demo_img](images/basic_lighting.bmp)
+![demo_img](images/basic_reflections.bmp)

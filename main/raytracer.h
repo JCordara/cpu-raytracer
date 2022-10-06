@@ -38,6 +38,11 @@ public:
 
     // TODO: reflections and stuff
     void set_num_bounces(int n);
+
+private:
+
+    void _write_pixel(int pixel_index, const vec3& color);
+
 };
 
 #endif // RAY_TRACER_H

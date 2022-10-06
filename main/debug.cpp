@@ -2,7 +2,7 @@
 
 #ifdef _DEBUG
     void print_vec3(const vec3& v, bool newline) {
-        printf("(%.2f, %.2f, %.2f)%s", v.x, v.y, v.x, newline ? "\n" : "");
+        printf("(%.2f, %.2f, %.2f)%s", v.x, v.y, v.z, newline ? "\n" : "");
     }
 
     void print_mat3(const mat3& m, bool newline) {

@@ -57,7 +57,7 @@ public:
         delete _value;
     }
 
-    T& unwrap() {
+    T& ref() {
         return *_value;
     }
 

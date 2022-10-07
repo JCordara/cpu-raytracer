@@ -21,6 +21,7 @@ private:
     const Camera* _camera;
 
     vec3 _empty_color;
+    float _num_bounces;
 
     unsigned char* _framebuffer;
     vector<Intersection> _intersection_pool;

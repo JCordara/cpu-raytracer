@@ -19,6 +19,11 @@ vec3f operator-(const vec3f& lhs, const vec3f& rhs) {
     );
 }
 
+vec3f lerp(const vec3f& lhs, const vec3f& rhs, float t) {
+    return ((1.0f - t) * lhs) + (t * rhs);
+}
+
+
 float vec3f::dot(const vec3f& rhs) const {
     return (this->x * rhs.x) + (this->y * rhs.y) + (this->z * rhs.z);
 }

@@ -71,4 +71,6 @@ vec3f operator/(int   scalar,   vec3f const& v);
 vec3f operator+(const vec3f& lhs, const vec3f& rhs);
 vec3f operator-(const vec3f& lhs, const vec3f& rhs);
 
+vec3f lerp(const vec3f& lhs, const vec3f& rhs, float t);
+
 #endif // VEC_3_F_H

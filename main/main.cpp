@@ -48,8 +48,7 @@ int main(int argc, char **argv) {
 
     // Raytracer
     Raytracer raytracer(&camera, &scene);
-
-    // raytracer.set_num_bounces(3); // Unimplemented
+    raytracer.set_num_bounces(7);
 
     // Generate image
     const unsigned char* framebuffer = raytracer.trace_scene();

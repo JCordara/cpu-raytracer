@@ -22,6 +22,10 @@ constexpr float _7_fact_inv = 1.0f / (7.0f * 6.0f * 5.0f * 4.0f * 3.0f * 2.0f);
 
 constexpr float nan = NaN;
 
+inline constexpr float lerp(float a, float b, float t) {
+    return ((1.0f - t) * a) + (t * b);
+}
+
 inline constexpr float max(float a, float b) {
     return a > b ? a : b;
 }

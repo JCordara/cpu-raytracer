@@ -32,48 +32,35 @@ unsigned char* Raytracer::trace_scene() {
     float blend = 0.15f;
 
     for (const vec3& virtual_pixel : _camera->image_surface()) {
-        vec3 origin = _camera->pos();
-        vec3 dir = /* to */ virtual_pixel - /* from */ origin;
-        vec3 reflect_dir;
+        Ray initial_ray = Ray(_camera->pos(), virtual_pixel - _camera->pos());
+        vec3 color_sample = path_trace(initial_ray);
 
-        // Initial cast
-        opt<Intersection> ixn_opt = trace(origin, dir);
-
-        // Move on to next pixel if no intersection found
-        if (!ixn_opt) {
-            _write_pixel(pixel_index++, _empty_color);
-            continue;
-        }
-
-        Intersection ixn = ixn_opt.ref();
-        vec3 pixel_color = ixn.color();
-        float brightness = dir
-            .reflect(ixn.normal())
-            .normalize()
-            .dot(-_scene->directional_light_dir());
-
-        for (int i = 0; i < _num_bounces; i++) {
-            reflect_dir = dir.reflect(ixn.normal()).normalize();
-            float new_brightness = reflect_dir.dot(-_scene->directional_light_dir());
-            new_brightness = max(new_brightness, 0.0f);
-            brightness = lerp(brightness, new_brightness, blend);
-            opt<Intersection> refl_ixn_opt = trace(ixn.point(), reflect_dir);
-            if (refl_ixn_opt) {
-                Intersection refl_ixn = refl_ixn_opt.ref();
-                pixel_color = lerp(pixel_color, refl_ixn.color(), blend);
-                ixn = refl_ixn;
-            }
-            else {
-                pixel_color = lerp(pixel_color, _empty_color, blend);
-                break;
-            }
-        }
-        
-        pixel_color = pixel_color * max(brightness, 0.1f);
-        _write_pixel(pixel_index++, pixel_color);
+        _write_pixel(pixel_index++, color_sample);
     }
 
     return _framebuffer;
+}
+
+vec3 Raytracer::path_trace(const Ray& ray, unsigned int iteration) {
+    // Base case raycast
+    if (iteration >= _num_bounces) {
+        opt<Intersection> ixn_opt = trace(ray.origin(), ray.direction());
+        if (Intersection* p_ixn = ixn_opt.ptr()) {
+            float brightness = cast_light_ray(*p_ixn);
+            return p_ixn->color() * brightness;
+        }
+        else return _empty_color;
+    }
+
+    opt<Intersection> ixn_opt = trace(ray.origin(), ray.direction());
+    if (Intersection* p_ixn = ixn_opt.ptr()) {
+        vec3 reflect_dir = ray.direction().reflect(p_ixn->normal());
+        Ray reflected_ray = Ray(p_ixn->point(), reflect_dir);
+        vec3 color = path_trace(reflected_ray, iteration + 1);
+        float brightness = cast_light_ray(*p_ixn);
+        return lerp(p_ixn->color(), color, 0.75f) * brightness;
+    } 
+    else return _empty_color;
 }
 
 opt<Intersection> Raytracer::trace(const vec3& origin, const vec3& direction) {
@@ -99,6 +86,13 @@ opt<Intersection> Raytracer::trace(const vec3& origin, const vec3& direction) {
 
     // Return closest intersection for now
     return opt<Intersection>(_intersection_pool[0]);
+}
+
+float Raytracer::cast_light_ray(const Intersection& ixn) {
+    vec3 light_dir = -_scene->directional_light_dir();
+    vec3 reflect_dir = ixn.direction().reflect(ixn.normal()).normalize();
+    float dot_prod = reflect_dir.dot(light_dir);
+    return max(dot_prod * dot_prod, 0.175f);
 }
 
 void Raytracer::set_num_bounces(int n) {

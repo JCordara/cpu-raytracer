@@ -21,7 +21,7 @@ private:
     const Camera* _camera;
 
     vec3 _empty_color;
-    float _num_bounces;
+    unsigned int _num_bounces;
 
     unsigned char* _framebuffer;
     vector<Intersection> _intersection_pool;
@@ -35,9 +35,11 @@ public:
     void set_empty_color(const vec3& color);
 
     unsigned char* trace_scene();
+    vec3 path_trace(const Ray& ray, unsigned int iteration = 0);
     opt<Intersection> trace(const vec3& origin, const vec3& direction);
 
-    // TODO: reflections and stuff
+    float cast_light_ray(const Intersection& ixn);
+
     void set_num_bounces(int n);
 
 private:

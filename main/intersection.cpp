@@ -50,6 +50,6 @@ void Intersection::set_direction(const vec3& new_direction) {
 }
 
 void Intersection::set_dist_sqr(const float& new_dist_sqr) {
-    _direction = new_dist_sqr;
+    _dist_sqr = new_dist_sqr;
 }
 

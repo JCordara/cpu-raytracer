@@ -1,4 +1,5 @@
 #include "random.h"
+#include <cstdint>
 
 RandomGenerator generator;
 
@@ -22,7 +23,7 @@ int Random::max() {
 
 void Random::init_random_generator() {
     char* magic = new char[30];
-    int rseed = reinterpret_cast<int>(&magic[4]);
+    int rseed = static_cast<int>(reinterpret_cast<intptr_t>(&magic[4]));
     rseed ^= 0x5555555555555555;
     generator.seed(rseed);
     delete[] magic;

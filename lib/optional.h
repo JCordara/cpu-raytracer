@@ -5,7 +5,7 @@
  * opt (optional, shortened for ease of typing) objects are used to pass around 
  * nullable objects. They provide explicit boolean conversion and access to the
  * underlying object through a reference. The contained type must implement the
- * copy constructor and assignment operator.
+ * copy constructor.
  */
 template<typename T>
 class opt {
@@ -18,23 +18,19 @@ public:
     opt() : _value(nullptr) {}
 
     opt(const T& value) {
-        _value = new T;
-        *_value = value; // copy ctor
+        _value = new T(value); // copy ctor
     }
 
     opt(T&& value) {
-        _value = new T;
-        *_value = value; // copy ctor
+        _value = new T(value); // copy ctor
     }
 
     opt(const opt<T>& other) {
-        _value = new T;
-        *_value = *other._value; // copy ctor
+        _value = new T(*other._value); // copy ctor
     }
 
     opt(opt<T>&& other) {
-        _value = new T;
-        *_value = *other._value; // copy ctor
+        _value = new T(*other._value); // copy ctor
     }
 
     opt<T>& operator=(const opt<T>& rhs) {

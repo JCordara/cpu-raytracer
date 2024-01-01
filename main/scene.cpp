@@ -3,7 +3,7 @@
 
 Scene::Scene() : 
     _entities(10),
-    _directional_light_dir(0.5f, -1.0f, -0.5f)
+    _directional_light_dir(0.4f, -0.6f, -0.75f)
 {
     _directional_light_dir = _directional_light_dir.normalize();
 }

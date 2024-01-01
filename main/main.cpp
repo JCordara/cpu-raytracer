@@ -14,29 +14,64 @@
 #include "../lib/vex3d.h"
 
 
-int main(int argc, char **argv) {
-    // Create scene
-    Scene scene;
+void populate_scene(Scene& scene) {
+    // Grey sphere (background)
     scene.add_shape(new Sphere(
         vec3(0.0f, -90.0f, -60.0f),
         100.0f,
-        vec3(50, 50, 50)
+        Material(
+            vec3(30, 30, 30),
+            0.15f
+        )
     ));
+
+    // Blue sphere
     scene.add_shape(new Sphere(
         vec3(0.0f, 0.0f, -12.0f),
         3.0f,
-        vec3(10, 0, 230)
+        Material(
+            vec3(10, 0, 255),
+            0.9f
+        )
     ));
+
+    // Green sphere
     scene.add_shape(new Sphere(
         vec3(3.0f, -1.0f, -9.0f),
         0.5f,
-        vec3(75, 255, 150)
+        Material(
+            vec3(75, 205, 150),
+            0.0f
+        )
     ));
+
+    // Red sphere
     scene.add_shape(new Sphere(
-        vec3(-2.5f, 1.5f, -10.0f),
-        1.0f,
-        vec3(100, 40, 30)
+        vec3(-2.5f, 1.15f, -9.0f),
+        0.9f,
+        Material(
+            vec3(250, 20, 15),
+            0.7f
+        )
     ));
+
+    // Mirror sphere
+    scene.add_shape(new Sphere(
+        vec3(17.0f, 16.0f, -60.0f),
+        32.0f,
+        Material(
+            vec3(255, 255, 100),
+            0.7f
+        )
+    ));
+}
+
+
+int main(int argc, char **argv) {
+    // Create scene
+    Scene scene;
+
+    populate_scene(scene);
     
     float aspect_ratio = 16.0f / 9.0f;
     float fov = radians(80.0f);

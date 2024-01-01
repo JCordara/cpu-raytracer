@@ -2,10 +2,11 @@
 #include "intersection.h"
 #include "ray.h"
 
-Sphere::Sphere(const vec3& center, float radius, const vec3& color) {
+Sphere::Sphere(const vec3& center, float radius, const Material& material) : 
+    Shape(material)
+{
     this->_center = center;
     this->_radius = radius;
-    this->_color = color;
 }
 
 opt<Intersection> Sphere::check_intersection(const Ray& ray) const {
@@ -38,9 +39,9 @@ opt<Intersection> Sphere::check_intersection(const Ray& ray) const {
         Intersection(
             intersection_point, 
             normal, 
-            _color, 
             ray.direction(),
-            dist_sqr
+            dist_sqr,
+            material()
         )
     );
 }
@@ -49,20 +50,12 @@ vec3 Sphere::center() {
     return _center;
 }
 
-vec3 Sphere::color() {
-    return _color;
-}
-
 float Sphere::radius() {
     return _radius;
 }
 
 void Sphere::set_center(vec3 new_center) {
     _center = new_center;
-}
-
-void Sphere::set_color(vec3 new_color) {
-    _color = new_color;
 }
 
 void Sphere::set_radius(float new_radius) {

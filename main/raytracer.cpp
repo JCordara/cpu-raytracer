@@ -47,18 +47,26 @@ vec3 Raytracer::path_trace(const Ray& ray, unsigned int iteration) {
         opt<Intersection> ixn_opt = trace(ray.origin(), ray.direction());
         if (Intersection* p_ixn = ixn_opt.ptr()) {
             float brightness = cast_light_ray(*p_ixn);
-            return p_ixn->color() * brightness;
+            return p_ixn->material().color() * brightness;
         }
         else return _empty_color;
     }
 
     opt<Intersection> ixn_opt = trace(ray.origin(), ray.direction());
     if (Intersection* p_ixn = ixn_opt.ptr()) {
+
+        // Get reflected color
         vec3 reflect_dir = ray.direction().reflect(p_ixn->normal());
         Ray reflected_ray = Ray(p_ixn->point(), reflect_dir);
-        vec3 color = path_trace(reflected_ray, iteration + 1);
+        vec3 reflected_color = path_trace(reflected_ray, iteration + 1);
+
+        // Get color at intersection
         float brightness = cast_light_ray(*p_ixn);
-        return lerp(p_ixn->color(), color, 0.75f) * brightness;
+        const Material& material = p_ixn->material();
+        vec3 color = material.color();
+        float reflectivity = material.reflectivity();
+
+        return lerp(color, reflected_color, reflectivity) * brightness;
     } 
     else return _empty_color;
 }
@@ -90,9 +98,13 @@ opt<Intersection> Raytracer::trace(const vec3& origin, const vec3& direction) {
 
 float Raytracer::cast_light_ray(const Intersection& ixn) {
     vec3 light_dir = -_scene->directional_light_dir();
-    vec3 reflect_dir = ixn.direction().reflect(ixn.normal()).normalize();
-    float dot_prod = reflect_dir.dot(light_dir);
-    return max(dot_prod * dot_prod, 0.175f);
+    // Not sure what's going on here actually
+    // vec3 reflect_dir = ixn.direction().reflect(ixn.normal()).normalize();
+    // float dot_prod = reflect_dir.dot(light_dir);
+    // return max(dot_prod * dot_prod, 0.175f);
+    float dot_product = light_dir.dot(ixn.normal());
+    float dot_product_squared = dot_product * abs(dot_product);
+    return max(dot_product_squared, 0.175f);
 }
 
 void Raytracer::set_num_bounces(int n) {

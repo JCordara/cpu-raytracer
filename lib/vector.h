@@ -3,6 +3,8 @@
 
 #define VECTOR_DEFAULT_SIZE 10
 
+#include <cstring> // memmove
+
 template<typename T>
 class vector {
 private:
@@ -83,14 +85,20 @@ public:
         if (_tail == _length) {
             _expand();
         }
-        *(_values + _tail++) = item; // copy ctor
+        T copy(item); // copy ctor
+        memmove(_values + _tail++, static_cast<void*>(&copy), sizeof(T));
+        
+        // *(_values + _tail++) = item; // assignment operator
     }
 
     void append(T&& item) {
         if (_tail == _length) {
             _expand();
         }
-        *(_values + _tail++) = item; // copy ctor
+        T copy(item); // copy ctor
+        memmove(_values + _tail++, static_cast<void*>(&copy), sizeof(T));
+
+        // *(_values + _tail++) = item; // assignment operator
     }
 
     void prepend(const T& item) {
@@ -98,7 +106,12 @@ public:
             _expand();
         }
         _copy_elements(_values + 1);
-        *_values = item; // copy ctor
+
+        T copy(item); // copy ctor
+        memmove(_values, static_cast<void*>(&copy), sizeof(T));
+
+        // *_values = item; // assignment operator
+        
         _tail++;
     }
 
@@ -107,7 +120,12 @@ public:
             _expand();
         }
         _copy_elements(_values + 1);
-        *_values = item; // copy ctor
+
+        T copy(item); // copy ctor
+        memmove(_values, static_cast<void*>(&copy), sizeof(T));
+
+        // *_values = item; // assignment operator
+        
         _tail++;
     }
 
@@ -118,7 +136,12 @@ public:
         if (_tail != 0) {
             _copy_sub_elements(_values + (index + 1), index, _tail);
         }
-        *(_values + index) = item; // copy ctor
+
+        T copy(item); // copy ctor
+        memmove(_values + index, static_cast<void*>(&copy), sizeof(T));
+
+        // *(_values + index) = item; // assignment operator
+        
         _tail++;
     }
 
@@ -129,7 +152,12 @@ public:
         if (_tail != 0) {
             _copy_sub_elements(_values + (index + 1), index, _tail);
         }
-        *(_values + index) = item; // copy ctor
+
+        T copy(item); // copy ctor
+        memmove(_values + index, static_cast<void*>(&copy), sizeof(T));
+
+        // *(_values + index) = item; // assignment operator
+        
         _tail++;
     }
 
@@ -165,21 +193,27 @@ public:
 
 private:
 
+    // Copy entire array pointed to by this->_value to new address
     void _copy_elements(T* ptr) {
-        int ix = _tail;
-        while (ix >= 0) {
-            *(ptr + ix) = *(this->_values + ix); // copy ctor
-            ix--;
-        }
+        // int ix = _tail;
+        // while (ix >= 0) {
+        //     *(ptr + ix) = *(this->_values + ix); // assignment operator
+        //     ix--;
+        // }
+        memmove(ptr, this->_values, sizeof(T) * this->_tail);
     }
 
+    // Copy a subset of the array pointed to by this->_values to a new address
     void _copy_sub_elements(T* ptr, int start, int end) {
         // start/end are implicitly converted to signed ints for start = 0 case
-        int ix = end;
-        while (ix >= start) {
-            *(ptr + (ix - start)) = *(this->_values + ix); // copy ctor
-            ix--;
-        }
+        
+        // int ix = end;
+        // while (ix >= start) {
+        //     *(ptr + (ix - start)) = *(this->_values + ix); // assignment operator
+        //     ix--;
+        // }
+
+        memmove(ptr, this->_values + start, sizeof(T) * (end - start));
     }
 
     void _allocate(T** ptr) {

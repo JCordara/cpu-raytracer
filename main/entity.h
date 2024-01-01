@@ -2,6 +2,7 @@
 #define ENTITY_H
 
 #include "../lib/optional.h"
+#include "material.h"
 
 class Intersection;
 class Ray;
@@ -12,7 +13,12 @@ class Ray;
  */
 class Entity {
 public:
+
     virtual opt<Intersection> check_intersection(const Ray& ray) const = 0;
+    
+    virtual const Material& material() const = 0;
+    virtual void set_material(const Material& m) = 0;
+
     virtual ~Entity() = default;
 };
 

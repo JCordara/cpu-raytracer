@@ -15,21 +15,18 @@ private:
 
     vec3 _center;
     float _radius;
-    vec3 _color;
 
 public:
 
     Sphere() = default;
-    Sphere(const vec3& center, float radius, const vec3& color);
+    Sphere(const vec3& center, float radius, const Material& material);
 
     opt<Intersection> check_intersection(const Ray& ray) const;
     
     vec3 center();
-    vec3 color();
     float radius();
     
     void set_center(vec3 new_center);
-    void set_color(vec3 new_color);
     void set_radius(float new_radius);
 
     Sphere(const Sphere& other) = default;

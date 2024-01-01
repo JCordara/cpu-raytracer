@@ -1,0 +1,9 @@
+on:
+  push:
+    branches:
+    - master
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - run: bash run_tests.sh

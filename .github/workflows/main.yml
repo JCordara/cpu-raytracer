@@ -6,4 +6,5 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
-    - run: bash run_tests.sh
+    - uses: actions/checkout@v3
+    - run: ./run_tests.sh

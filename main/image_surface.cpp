@@ -4,9 +4,9 @@
 using PixelIterator = ImageSurface::PixelIterator;
 
 ImageSurface::ImageSurface(int h_res, int v_res, float fov):
+    _fov(fov),
     _h_res(h_res),
     _v_res(v_res),
-    _fov(fov),
     _transform(1.0f)
 {
     _arr_size = _h_res * _v_res;

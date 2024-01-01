@@ -9,8 +9,8 @@ Intersection::Intersection(
     float dist_sqr,
     const Material& material
 ) : 
-    _point(point),
     _normal(normal), 
+    _point(point),
     _direction(direction),
     _dist_sqr(dist_sqr),
     _material(material)

@@ -1,9 +1,9 @@
 #include "ray.h"
 
 Ray::Ray(const vec3& origin, const vec3& direction):
+    _direction_normalized(0),
     _origin(origin),
-    _direction(direction),
-    _direction_normalized(0)
+    _direction(direction)
 {}
 
 

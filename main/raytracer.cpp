@@ -29,7 +29,6 @@ void Raytracer::set_empty_color(const vec3& color) {
 
 unsigned char* Raytracer::trace_scene() {
     int pixel_index = 0;
-    float blend = 0.15f;
 
     for (const vec3& virtual_pixel : _camera->image_surface()) {
         Ray initial_ray = Ray(_camera->pos(), virtual_pixel - _camera->pos());

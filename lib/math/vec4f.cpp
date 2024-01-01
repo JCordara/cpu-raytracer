@@ -94,7 +94,6 @@ vec4f operator+(float scalar, vec4f const& v) {
 }
 
 vec4f operator+(vec4f const& v, int scalar) {
-    float f_scalar = static_cast<float>(scalar);
     return vec4f(
         v.x + scalar,
         v.y + scalar,

@@ -86,7 +86,7 @@ public:
             _expand();
         }
         T copy(item); // copy ctor
-        memmove(_values + _tail++, static_cast<void*>(&copy), sizeof(T));
+        memmove(static_cast<void*>(_values + _tail++), static_cast<void*>(&copy), sizeof(T));
         
         // *(_values + _tail++) = item; // assignment operator
     }
@@ -96,7 +96,7 @@ public:
             _expand();
         }
         T copy(item); // copy ctor
-        memmove(_values + _tail++, static_cast<void*>(&copy), sizeof(T));
+        memmove(static_cast<void*>(_values + _tail++), static_cast<void*>(&copy), sizeof(T));
 
         // *(_values + _tail++) = item; // assignment operator
     }
@@ -108,7 +108,7 @@ public:
         _copy_elements(_values + 1);
 
         T copy(item); // copy ctor
-        memmove(_values, static_cast<void*>(&copy), sizeof(T));
+        memmove(static_cast<void*>(_values), static_cast<void*>(&copy), sizeof(T));
 
         // *_values = item; // assignment operator
         
@@ -122,7 +122,7 @@ public:
         _copy_elements(_values + 1);
 
         T copy(item); // copy ctor
-        memmove(_values, static_cast<void*>(&copy), sizeof(T));
+        memmove(static_cast<void*>(_values), static_cast<void*>(&copy), sizeof(T));
 
         // *_values = item; // assignment operator
         
@@ -138,7 +138,7 @@ public:
         }
 
         T copy(item); // copy ctor
-        memmove(_values + index, static_cast<void*>(&copy), sizeof(T));
+        memmove(static_cast<void*>(_values + index), static_cast<void*>(&copy), sizeof(T));
 
         // *(_values + index) = item; // assignment operator
         
@@ -154,7 +154,7 @@ public:
         }
 
         T copy(item); // copy ctor
-        memmove(_values + index, static_cast<void*>(&copy), sizeof(T));
+        memmove(static_cast<void*>(_values + index), static_cast<void*>(&copy), sizeof(T));
 
         // *(_values + index) = item; // assignment operator
         
@@ -200,7 +200,7 @@ private:
         //     *(ptr + ix) = *(this->_values + ix); // assignment operator
         //     ix--;
         // }
-        memmove(ptr, this->_values, sizeof(T) * this->_tail);
+        memmove(static_cast<void*>(ptr), this->_values, sizeof(T) * this->_tail);
     }
 
     // Copy a subset of the array pointed to by this->_values to a new address
@@ -213,7 +213,7 @@ private:
         //     ix--;
         // }
 
-        memmove(ptr, this->_values + start, sizeof(T) * (end - start));
+        memmove(static_cast<void*>(ptr), this->_values + start, sizeof(T) * (end - start));
     }
 
     void _allocate(T** ptr) {

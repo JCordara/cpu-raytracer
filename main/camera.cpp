@@ -1,14 +1,14 @@
 #include "camera.h"
 
 Camera::Camera(float aspect_ratio, float fov, int vertical_resolution):
-    _aspect_ratio(aspect_ratio),
-    _fov(fov),
+    _transform(1.0f),
     _image_surface(
         vertical_resolution * aspect_ratio, 
         vertical_resolution, 
         fov
     ),
-    _transform(1.0f)
+    _aspect_ratio(aspect_ratio),
+    _fov(fov)
 {}
 
 void Camera::set_pos(const vec3& new_pos) {

@@ -32,7 +32,7 @@ TEST_END(test_cos)
 TEST_START(test_sqrt)
 
     CHECK_EQ_EPS(sqrt(4.0f), 2.0f, "Square root incorrect (case: 4.0)")
-    CHECK_EQ_EPS(sqrt(76851123.861123f), 8766.477277f, "Square root incorrect (case: 76851123.861123)")
+    CHECK_EQ_EPS(sqrt(76851123.861123), 8766.47727774, "Square root incorrect (case: 76851123.861123)")
     CHECK_EQ_EPS(sqrt(-1.0f), NaN, "Square root incorrect (case: -1.0)")
 
 TEST_END(test_sqrt)

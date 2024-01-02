@@ -11,60 +11,60 @@
 
 #define FLOAT_MAX     3.4028234660e38f
 
-constexpr float _rad_to_deg_ratio = 180.0f / PI;
-constexpr float _deg_to_rad_ratio = PI / 180.0f;
-constexpr float _2_fact_inv = 1.0f / (2.0f);
-constexpr float _3_fact_inv = 1.0f / (3.0f * 2.0f);
-constexpr float _4_fact_inv = 1.0f / (4.0f * 3.0f * 2.0f);
-constexpr float _5_fact_inv = 1.0f / (5.0f * 4.0f * 3.0f * 2.0f);
-constexpr float _6_fact_inv = 1.0f / (6.0f * 5.0f * 4.0f * 3.0f * 2.0f);
-constexpr float _7_fact_inv = 1.0f / (7.0f * 6.0f * 5.0f * 4.0f * 3.0f * 2.0f);
+constexpr double _rad_to_deg_ratio = 180.0f / PI;
+constexpr double _deg_to_rad_ratio = PI / 180.0f;
+constexpr double _2_fact_inv = 1.0f / (2.0f);
+constexpr double _3_fact_inv = 1.0f / (3.0f * 2.0f);
+constexpr double _4_fact_inv = 1.0f / (4.0f * 3.0f * 2.0f);
+constexpr double _5_fact_inv = 1.0f / (5.0f * 4.0f * 3.0f * 2.0f);
+constexpr double _6_fact_inv = 1.0f / (6.0f * 5.0f * 4.0f * 3.0f * 2.0f);
+constexpr double _7_fact_inv = 1.0f / (7.0f * 6.0f * 5.0f * 4.0f * 3.0f * 2.0f);
 
-constexpr float nan = NaN;
+constexpr double nan = NaN;
 
-inline constexpr float lerp(float a, float b, float t) {
+inline constexpr double lerp(double a, double b, double t) {
     return ((1.0f - t) * a) + (t * b);
 }
 
-inline constexpr float max(float a, float b) {
+inline constexpr double max(double a, double b) {
     return a > b ? a : b;
 }
 
-inline constexpr float min(float a, float b) {
+inline constexpr double min(double a, double b) {
     return a < b ? a : b;
 }
 
-inline constexpr float abs(float x) {
+inline constexpr double abs(double x) {
     return x >= 0 ? x : -x;
 }
 
-inline constexpr float radians(float degrees) {
+inline constexpr double radians(double degrees) {
     return _deg_to_rad_ratio * degrees;
 }
 
-inline constexpr float degrees(float radians) {
+inline constexpr double degrees(double radians) {
     return _rad_to_deg_ratio * radians;
 }
 
-inline bool float_eq(const float& x, const float& y) {
+inline bool float_eq(const double& x, const double& y) {
     return (x < (y + 0.0001f)) && (x > (y - 0.0001f));
 }
 
-inline constexpr float _sin_impl(float radians) {
-    float pow3 = radians * radians * radians;
-    float pow5 = pow3 * radians * radians;
-    float pow7 = pow5 * radians * radians;
+inline constexpr double _sin_impl(double radians) {
+    double pow3 = radians * radians * radians;
+    double pow5 = pow3 * radians * radians;
+    double pow7 = pow5 * radians * radians;
     return radians - (pow3 * _3_fact_inv) + (pow5 * _5_fact_inv) - (pow7 * _7_fact_inv);
 }
 
-inline constexpr float _cos_impl(float radians) {
-    float pow2 = radians * radians;
-    float pow4 = pow2 * radians * radians;
-    float pow6 = pow4 * radians * radians;
+inline constexpr double _cos_impl(double radians) {
+    double pow2 = radians * radians;
+    double pow4 = pow2 * radians * radians;
+    double pow6 = pow4 * radians * radians;
     return 1 - (pow2 * _2_fact_inv) + (pow4 * _4_fact_inv) - (pow6 * _6_fact_inv);
 }
 
-inline float sin(float radians) {
+inline double sin(double radians) {
     // Get into 0 - 360 degree range
     while (radians >= TWO_PI) radians -= TWO_PI;
     while (radians < 0) radians += TWO_PI;
@@ -75,7 +75,7 @@ inline float sin(float radians) {
     else if (abs(radians - THREE_HALF_PI) < EPSILON) return -1.0f;
 
     // Use vertical symmetry if in quadrants 3 or 4
-    float multiplier = 1.0f;
+    double multiplier = 1.0f;
     if (radians >= PI) {
         radians -= PI;
         multiplier = -1.0f;
@@ -86,7 +86,7 @@ inline float sin(float radians) {
     else return _cos_impl(HALF_PI - radians) * multiplier;
 }
 
-inline constexpr float cos(float radians) {
+inline constexpr double cos(double radians) {
     // Get into 0 - 360 degree range
     while (radians >= TWO_PI) radians -= TWO_PI;
     while (radians < 0) radians += TWO_PI;
@@ -97,7 +97,7 @@ inline constexpr float cos(float radians) {
     else if (abs(radians - THREE_HALF_PI) < EPSILON)  return  0.0f;
 
     // Use vertical symmetry if in quadrants 3 or 4
-    float multiplier = 1.0f;
+    double multiplier = 1.0f;
     if (radians >= PI) {
         radians -= PI;
         multiplier = -1.0f;
@@ -111,15 +111,15 @@ inline constexpr float cos(float radians) {
     else return _sin_impl(HALF_PI - radians) * multiplier;
 }
 
-inline constexpr float _sqrt_impl(float x, float s, float s2)
+inline constexpr double _sqrt_impl(double x, double s, double s2)
 {
     return !(s < s2) ? s2 : _sqrt_impl(x, (x / s + s) / 2, s);
 }
 
-inline constexpr float sqrt(float x)
+inline constexpr double sqrt(double x)
 {
     if (x < 0) return NaN;
-    float s = (x > 1) ? x : float(1);
+    double s = (x > 1) ? x : double(1);
     return _sqrt_impl(x, (x / s + s) / 2, s);
 }
 

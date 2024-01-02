@@ -63,7 +63,7 @@ namespace eztest {
         std::cout << "\n\n" << (all_passed 
             ? "\033[0;32mAll tests passed!\033[0m" 
             : "\033[0;31mTests failed.\033[0m") << "\n";
-        return all_passed;
+        return all_passed ? 0 : -1; // Return non-zero return code on failure
     }
 };
 

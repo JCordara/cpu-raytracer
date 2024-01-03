@@ -62,6 +62,22 @@ vec3f vec3f::reflect(const vec3f&& normal) const {
     return *this - operand;
 }
 
+vec3f vec3f::refract(const vec3f& normal, float n1, float n2) const {
+    const vec3 nnormal = normal.normalize();
+    const vec3 nrnormal = -nnormal;
+    const vec3 nincident = this->normalize();
+    const vec3 nrnormal_x_nincident = nrnormal.cross(nincident);
+    const vec3 nnormal_x_nincident = nnormal.cross(nincident);
+    const float refractive_ratio = n1 / n2;
+    const float refractive_ratio_sqr = refractive_ratio * refractive_ratio;
+    const float radicand = 1.0f - (refractive_ratio_sqr * nnormal_x_nincident.dot(nnormal_x_nincident));
+    return (refractive_ratio * nnormal.cross(nrnormal_x_nincident)) - (static_cast<float>(sqrt(radicand)) * nnormal);
+}
+
+vec3f vec3f::refract(const vec3f&& normal, float n1, float n2) const {
+    return this->refract(normal, n1, n2);
+}
+
 
 // Binary operations with scalar types
 

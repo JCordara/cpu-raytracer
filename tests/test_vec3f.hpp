@@ -84,6 +84,32 @@ TEST_START(test_vec3f_reflect)
 TEST_END(test_vec3f_reflect)
 
 
+TEST_START(test_vec3f_refraction)
+
+    float n1 = 1.0f;
+    float n2 = 1.5f;
+
+    vec3 incident0(0.70710678f, 0.0f, 0.70710678f);
+    vec3 normal0(0.0f, 0.0f, -1.0f);
+    vec3 result0 = incident0.refract(normal0, n1, n2).normalize();
+    vec3 expected0(0.47140452f, 0.0f, 0.88191712f);
+
+    vec3 incident1(4.0f, 1.0f, 1.0f);
+    vec3 normal1(0.0f, -2.0f, -1.0f);
+    vec3 result1 = incident1.refract(normal1, n1, n2).normalize();
+    vec3 expected1(0.62853944f, 0.66139334f, 0.40926408f);
+
+    CHECK_EQ(result0.x, expected0.x, "vec3f refraction incorrect in x component - 2D test")
+    CHECK_EQ(result0.y, expected0.y, "vec3f refraction incorrect in y component - 2D test")
+    CHECK_EQ(result0.z, expected0.z, "vec3f refraction incorrect in z component - 2D test")
+
+    CHECK_EQ(result1.x, expected1.x, "vec3f refraction incorrect in x component - 3D test")
+    CHECK_EQ(result1.y, expected1.y, "vec3f refraction incorrect in y component - 3D test")
+    CHECK_EQ(result1.z, expected1.z, "vec3f refraction incorrect in z component - 3D test")
+
+TEST_END(test_vec3f_refraction)
+
+
 TEST_START(test_scalar_addition)
 
     vec3f v(0.0f, 5.0f, 10.0f);

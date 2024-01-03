@@ -18,6 +18,8 @@ public:
     vec3f cross(const vec3f&& rhs) const;
     vec3f reflect(const vec3f& normal) const;
     vec3f reflect(const vec3f&& normal) const;
+    vec3f refract(const vec3f& normal, float n1, float n2) const;
+    vec3f refract(const vec3f&& normal, float n1, float n2) const;
 
     float magnitude() const;
     float magnitude2() const;

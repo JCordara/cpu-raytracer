@@ -84,7 +84,7 @@ TEST_START(test_vec3f_reflect)
 TEST_END(test_vec3f_reflect)
 
 
-TEST_START(test_vec3f_refraction)
+TEST_START(test_vec3f_refract)
 
     float n1 = 1.0f;
     float n2 = 1.5f;
@@ -99,15 +99,33 @@ TEST_START(test_vec3f_refraction)
     vec3 result1 = incident1.refract(normal1, n1, n2).normalize();
     vec3 expected1(0.62853944f, 0.66139334f, 0.40926408f);
 
-    CHECK_EQ(result0.x, expected0.x, "vec3f refraction incorrect in x component - 2D test")
-    CHECK_EQ(result0.y, expected0.y, "vec3f refraction incorrect in y component - 2D test")
-    CHECK_EQ(result0.z, expected0.z, "vec3f refraction incorrect in z component - 2D test")
+    vec3 incident2(0.1f, 0.0f, 1.0f);
+    vec3 normal2(0.0f, 0.0f, -1.0f);
+    vec3 result2 = incident2.refract(normal2, n2, n1).normalize();
+    vec3 expected2(0.149256f, 0.0f, 0.988799f);
 
-    CHECK_EQ(result1.x, expected1.x, "vec3f refraction incorrect in x component - 3D test")
-    CHECK_EQ(result1.y, expected1.y, "vec3f refraction incorrect in y component - 3D test")
-    CHECK_EQ(result1.z, expected1.z, "vec3f refraction incorrect in z component - 3D test")
+    vec3 incident3(0.5f, -0.5f, 0.5f);
+    vec3 normal3 = vec3(0.0f, 1.0f, 0.0f).normalize();
+    vec3 result3 = incident3.refract(normal3, n1, n1);
+    vec3 expected3 = incident3.normalize();
 
-TEST_END(test_vec3f_refraction)
+    CHECK_EQ_EPS(result0.x, expected0.x, "vec3f refraction incorrect in x component - 2D test")
+    CHECK_EQ_EPS(result0.y, expected0.y, "vec3f refraction incorrect in y component - 2D test")
+    CHECK_EQ_EPS(result0.z, expected0.z, "vec3f refraction incorrect in z component - 2D test")
+
+    CHECK_EQ_EPS(result1.x, expected1.x, "vec3f refraction incorrect in x component - 3D test")
+    CHECK_EQ_EPS(result1.y, expected1.y, "vec3f refraction incorrect in y component - 3D test")
+    CHECK_EQ_EPS(result1.z, expected1.z, "vec3f refraction incorrect in z component - 3D test")
+
+    CHECK_EQ_EPS(result2.x, expected2.x, "vec3f refraction incorrect in x component - high index to low test")
+    CHECK_EQ_EPS(result2.y, expected2.y, "vec3f refraction incorrect in y component - high index to low test")
+    CHECK_EQ_EPS(result2.z, expected2.z, "vec3f refraction incorrect in z component - high index to low test")
+
+    CHECK_EQ_EPS(result3.x, expected3.x, "vec3f refraction incorrect in x component - no change in refractive index")
+    CHECK_EQ_EPS(result3.y, expected3.y, "vec3f refraction incorrect in y component - no change in refractive index")
+    CHECK_EQ_EPS(result3.z, expected3.z, "vec3f refraction incorrect in z component - no change in refractive index")
+
+TEST_END(test_vec3f_refract)
 
 
 TEST_START(test_scalar_addition)

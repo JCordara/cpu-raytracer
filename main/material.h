@@ -18,7 +18,7 @@ public:
     Material(const vec3& color);
     Material(const vec3& color, const float reflectivity);
     Material(const vec3& color, const float reflectivity, const float opacity);
-    Material(const vec3& color, const float reflectivity, const float opacity, const float recraftice_index);
+    Material(const vec3& color, const float reflectivity, const float opacity, const float refractive_index);
 
     const vec3& color() const;
     const float reflectivity() const;

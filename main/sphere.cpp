@@ -23,25 +23,32 @@ opt<Intersection> Sphere::check_intersection(const Ray& ray) const {
     float t0 = (-b + disc_sqrt) / (2 * a);
     float t1 = (-b - disc_sqrt) / (2 * a);
     
-    // Collision is behind ray origin
+    // Sphere is behind ray origin
     if (t0 < EPSILON && t1 < EPSILON) return opt<Intersection>::none();
 
-    // Take smallest non-negative parameter value
-    float t = 0;
-    if (t0 < t1 && t0 >= 0) t = t0;
-    else t = t1;
+    bool exiting = false;
+    float t;
+    if (t0 < EPSILON || t1 < EPSILON) {
+        // If either collision is behind ray origin, ray is exiting the sphere
+        exiting = true;
+        t = (t0 < 0) ? t1 : t0;
+    } else {
+        // Both are confirmed positive values
+        t = (t0 < t1) ? t0 : t1;
+    }
 
     vec3 intersection_point = ray.origin() + (ray.direction() * t);
-    vec3 normal = intersection_point - _center;
+    vec3 normal = (intersection_point - _center).normalize();
     float dist_sqr = (intersection_point - ray.origin()).magnitude2();
-    normal = normal.normalize();
+
     return opt<Intersection>(
         Intersection(
             intersection_point, 
             normal, 
             ray.direction(),
             dist_sqr,
-            material()
+            material(),
+            exiting
         )
     );
 }

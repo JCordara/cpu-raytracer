@@ -17,10 +17,10 @@
 void populate_scene(Scene& scene) {
     // Grey sphere (background)
     scene.add_shape(new Sphere(
-        vec3(0.0f, -90.0f, -60.0f),
+        vec3(0.0f, -90.0f, -62.0f),
         100.0f,
         Material(
-            vec3(30, 30, 30),
+            vec3(20, 20, 20),
             0.15f
         )
     ));
@@ -30,10 +30,13 @@ void populate_scene(Scene& scene) {
         vec3(0.0f, 0.0f, -12.0f),
         3.0f,
         Material(
-            vec3(10, 0, 255),
-            0.9f
+            vec3(20, 20, 140),
+            0.2f,   // reflectivity
+            0.8f,   // opacity
+            1.5f    // refractive index
         )
     ));
+
 
     // Green sphere
     scene.add_shape(new Sphere(
@@ -47,11 +50,23 @@ void populate_scene(Scene& scene) {
 
     // Red sphere
     scene.add_shape(new Sphere(
-        vec3(-2.5f, 1.15f, -9.0f),
+        vec3(-2.75f, 1.2f, -8.5f),
         0.9f,
         Material(
-            vec3(250, 20, 15),
-            0.7f
+            vec3(180, 15, 10),
+            0.1f
+        )
+    ));
+    
+    // Glass sphere
+    scene.add_shape(new Sphere(
+        vec3(-8.0f, 3.5f, -10.0f),
+        1.2f,
+        Material(
+            vec3(0, 0, 0),
+            0.55f,
+            0.0f,
+            1.5f
         )
     ));
 
@@ -61,7 +76,7 @@ void populate_scene(Scene& scene) {
         32.0f,
         Material(
             vec3(255, 255, 100),
-            0.7f
+            0.6f
         )
     ));
 }
@@ -83,7 +98,7 @@ int main(int argc, char **argv) {
 
     // Raytracer
     Raytracer raytracer(&camera, &scene);
-    raytracer.set_num_bounces(4);
+    raytracer.set_num_bounces(10);
 
     // Generate image
     const unsigned char* framebuffer = raytracer.trace_scene();

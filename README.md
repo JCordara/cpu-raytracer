@@ -1,13 +1,14 @@
 # Current status
+- Basic raytracing model implemented
+  - Ray-sphere collisions
+  - Reflection
+  - Refraction
+  - Curved image plane (allows 360+ degrees field of view)
+  - Basic lighting model (no shadows yet)
 - Custom 3D vector math library
   - vec3f, vec4f operations
   - mat3, mat4 operations
   - sin, cos, sqrt implementations
-- Basic raytracing model implemented
-  - Ray-sphere collisions
-  - Basic reflections
-  - Curved image plane (allows 360+ degrees field of view)
-  - Very basic lighting model (no shadows yet)
 - Custom image output library
   - Generates 24bit color depth bitmap images (.bmp)
 
@@ -27,4 +28,4 @@
   - Optimized intersection algorithms
 
 # Demo of current status
-![demo_img](images/04_variable_reflectivity.bmp)
+![demo_img](images/05_refraction.bmp)

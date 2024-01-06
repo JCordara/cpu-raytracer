@@ -35,7 +35,6 @@ public:
     void set_empty_color(const vec3& color);
 
     unsigned char* trace_scene();
-    vec3 path_trace(const Ray& ray, unsigned int iteration = 0);
     opt<Intersection> trace(const vec3& origin, const vec3& direction);
 
     float cast_light_ray(const Intersection& ixn);
@@ -43,6 +42,11 @@ public:
     void set_num_bounces(int n);
 
 private:
+
+    vec3 _get_reflected_color(const Ray& ray, const Intersection& ixn, int iteration);
+    vec3 _get_refracted_color(const Ray& ray, const Intersection& ixn, int iteration);
+    vec3 _get_diffuse_color(const Intersection& ixn);
+    vec3 _path_trace(const Ray& ray, unsigned int iteration = 0);
 
     void _write_pixel(int pixel_index, const vec3& color);
 

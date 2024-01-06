@@ -7,13 +7,15 @@ Intersection::Intersection(
     const vec3& normal,
     const vec3& direction,
     float dist_sqr,
-    const Material& material
+    const Material& material,
+    const bool exiting
 ) : 
     _normal(normal), 
     _point(point),
     _direction(direction),
     _dist_sqr(dist_sqr),
-    _material(material)
+    _material(material),
+    _exiting(exiting)
 {}
 
 const vec3& Intersection::normal() const {
@@ -36,6 +38,9 @@ const Material& Intersection::material() const {
     return _material;
 }
 
+const bool Intersection::exiting() const {
+    return _exiting;
+}
 
 void Intersection::set_normal(const vec3& new_normal) {
     _normal = new_normal;

@@ -2,19 +2,12 @@
 #include "debug.h"
 
 Material::Material() :
-    _color(255, 255, 255),
-    _reflectivity(0.5f),
-    _opacity(1.0f),
-    _refractive_index(1.0f)
-{
-    print("Material default ctor\n");
-}
+    Material(vec3(255, 255, 255), 0.0f, 1.0f, 1.0f)
+{}
 
 Material::Material(const vec3& color) :
     Material(color, 0.0f, 1.0f, 1.0f)
-{
-    print("Material color ctor\n");
-}
+{}
 
 Material::Material(const vec3& color, const float reflectivity) :
     Material(color, reflectivity, 1.0f, 1.0f)

@@ -17,6 +17,7 @@ private:
     vec3 _direction;
     float _dist_sqr;
     const Material& _material;
+    bool _exiting;
 
 public:
 
@@ -26,7 +27,8 @@ public:
         const vec3& normal, 
         const vec3& direction, 
         float dist_sqr,
-        const Material& material
+        const Material& material,
+        const bool exiting
     );
 
     Intersection(const Intersection& other) = default;
@@ -36,6 +38,7 @@ public:
     const vec3& direction() const;
     const float& dist_sqr() const;
     const Material& material() const;
+    const bool exiting() const;
     void set_normal(const vec3& new_normal);
     void set_point(const vec3& new_point);
     void set_direction(const vec3& new_direction);

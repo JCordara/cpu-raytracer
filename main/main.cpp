@@ -32,7 +32,7 @@ void populate_scene(Scene& scene) {
         Material(
             vec3(20, 20, 140),
             0.2f,   // reflectivity
-            0.8f,   // opacity
+            0.6f,   // opacity
             1.5f    // refractive index
         )
     ));
@@ -54,7 +54,9 @@ void populate_scene(Scene& scene) {
         0.9f,
         Material(
             vec3(180, 15, 10),
-            0.1f
+            0.2f,
+            1.0f,
+            2.0f
         )
     ));
     

@@ -20,6 +20,8 @@ public:
     Material(const vec3& color, const float reflectivity, const float opacity);
     Material(const vec3& color, const float reflectivity, const float opacity, const float refractive_index);
 
+    const void fresnel(const vec3& incident, const vec3& normal, float n1, float n2, /* out */ float* kr, /* out */ float* kt) const;
+
     const vec3& color() const;
     const float reflectivity() const;
     const float refractive_index() const;

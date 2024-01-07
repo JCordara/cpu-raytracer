@@ -94,20 +94,34 @@ vec3 Raytracer::_path_trace(const Ray& ray, unsigned int iteration) {
 
         // Get material properties
         const Material& material = p_ixn->material();
-        float reflectivity = p_ixn->exiting() ? 0.0f : material.reflectivity(); // Ignore internal reflections
-        float transparency = 1.0f - material.opacity();
+        float n1 = 1.0f;
+        float n2 = material.refractive_index();
+        
+        if (p_ixn->exiting()) {  // swap if ray originated inside object
+            n1 = material.refractive_index();
+            n2 = 1.0f;
+        }
 
         // Color mixing
-        float diffuse_color_mix = max(0.0f, 1.0f - (reflectivity + transparency));
-        float color_mix_total = diffuse_color_mix + reflectivity + transparency;
-        diffuse_color_mix = diffuse_color_mix / color_mix_total;
-        float reflected_color_mix = reflectivity / color_mix_total;
-        float refracted_color_mix = transparency / color_mix_total;
+        float kr = 0.0f, kt = 0.0f;
+        material.fresnel(ray.direction(), p_ixn->normal(), n1, n2, &kr, &kt);
+        // if (material.opacity() >= (1.0f - EPSILON)) print("kt` = %.2f\n", kt);
+        float transparency_ratio = (1.0f - material.opacity()) / 1.0f;
+        kt *= transparency_ratio;
+        kr += material.reflectivity();
+        float total = kr + kt + material.opacity();
+        kr /= total;
+        kt /= total;
+        float kd = material.opacity() / total;
+
+        float sum = kd + kr + kt;
+        if (sum > (1.0f + EPSILON))
+            print("%.2f + %.2f + %.2f = %.2f\n", kd, kr, kt, sum);
 
         return (
-            (diffuse_color * diffuse_color_mix) +
-            (reflected_color * reflected_color_mix) +
-            (refracted_color * refracted_color_mix)
+            (diffuse_color   * kd) +
+            (reflected_color * kr) +
+            (refracted_color * kt)
         );
     } 
 

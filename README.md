@@ -28,4 +28,4 @@
   - Optimized intersection algorithms
 
 # Demo of current status
-![demo_img](images/05_refraction.bmp)
+![demo_img](images/06_fresnel.bmp)

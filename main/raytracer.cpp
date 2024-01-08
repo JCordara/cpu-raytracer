@@ -92,6 +92,12 @@ vec3 Raytracer::_path_trace(const Ray& ray, unsigned int iteration) {
         vec3 reflected_color = _get_reflected_color(ray, *p_ixn, iteration);
         vec3 refracted_color = _get_refracted_color(ray, *p_ixn, iteration);
 
+        // Very simple shadow raycast (works for single directional light source)
+        bool in_shadow = static_cast<bool>(trace(p_ixn->point(), -_scene->directional_light_dir()));
+        if (in_shadow) {
+            diffuse_color = 0.4f * diffuse_color;   // Just darken the diffuse color for now
+        }
+
         // Get material properties
         const Material& material = p_ixn->material();
         float n1 = 1.0f;

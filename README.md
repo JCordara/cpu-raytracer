@@ -4,7 +4,7 @@
   - Reflection
   - Refraction
   - Curved image plane (allows 360+ degrees field of view)
-  - Basic lighting model (no shadows yet)
+  - Basic lighting model
 - Custom 3D vector math library
   - vec3f, vec4f operations
   - mat3, mat4 operations
@@ -28,4 +28,4 @@
   - Optimized intersection algorithms
 
 # Demo of current status
-![demo_img](images/07_planes.bmp)
+![demo_img](images/08_shadows.bmp)

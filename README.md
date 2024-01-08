@@ -1,6 +1,6 @@
 # Current status
 - Basic raytracing model implemented
-  - Ray-sphere collisions
+  - Ray-sphere & ray-plane collisions
   - Reflection
   - Refraction
   - Curved image plane (allows 360+ degrees field of view)
@@ -28,4 +28,4 @@
   - Optimized intersection algorithms
 
 # Demo of current status
-![demo_img](images/06_fresnel.bmp)
+![demo_img](images/07_planes.bmp)

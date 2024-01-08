@@ -4,7 +4,7 @@
 #include "../lib/vex3d.h"
 #include "../lib/vector.h"
 
-class Entity;
+class Renderable;
 
 /**
  * A scene is a container for entities in 3D space. Raytracer objects hold a
@@ -14,7 +14,7 @@ class Entity;
 class Scene {
 private:
 
-    vector<Entity*> _entities;
+    vector<Renderable*> _entities;
 
     vec3 _directional_light_dir;
     
@@ -22,12 +22,12 @@ public:
 
     Scene();
     
-    Entity* add_shape(Entity* s);
+    Renderable* add_shape(Renderable* s);
 
     vec3 directional_light_dir() const;
 
-    vector<Entity*>::Iterator begin() const;
-    vector<Entity*>::Iterator end() const;
+    vector<Renderable*>::Iterator begin() const;
+    vector<Renderable*>::Iterator end() const;
     
 };
 

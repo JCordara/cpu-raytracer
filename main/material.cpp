@@ -33,15 +33,24 @@ const void Material::fresnel(const vec3& incident, const vec3& normal, float n1,
         return;
     }
 
-    float cost = incident.refract(normal, n1, n2).dot(-normal);
-    float x2i = n2 * cosi;
-    float x1t = n1 * cost;
-    float fr1 = (x2i - x1t) / (x2i + x1t);
-    float fr2 = fr1 * fr1;
-    float ft1 = (x1t - x2i) / (x2i + x1t);
-    float ft2 = ft1 * ft1;
-    *kr = (fr2 + ft2) / 2.0f;
+    // Schlick's approximation
+    float r0 = (n2 - 1.0f) / (n2 + 1.0f);
+    r0 = r0 * r0;
+    float t0 = 1.0f - cosi;
+    t0 = t0 * t0 * t0 * t0 * t0;
+    *kr = r0 + (1.0f - r0) * t0;
     *kt = 1.0f - *kr;
+
+    // Fresnel equation for dialectric materials (I think?)
+    // float cost = incident.refract(normal, n1, n2).dot(-normal);
+    // float x2i = n2 * cosi;
+    // float x1t = n1 * cost;
+    // float fr1 = (x2i - x1t) / (x2i + x1t);
+    // float fr2 = fr1 * fr1;
+    // float ft1 = (x1t - x2i) / (x2i + x1t);
+    // float ft2 = ft1 * ft1;
+    // *kr = (fr2 + ft2) / 2.0f;
+    // *kt = 1.0f - *kr;
 }
 
 

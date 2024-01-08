@@ -3,14 +3,14 @@
 #include "scene.h"
 #include "ray.h"
 #include "intersection.h"
-#include "sphere.h"
+#include "renderable.h"
 
 #include "debug.h"
 
 Raytracer::Raytracer(const Camera* camera, const Scene* scene) :
     _scene(scene),
     _camera(camera),
-    _empty_color(90, 130, 190),
+    _empty_color(255, 255, 255),
     _num_bounces(3),
     _intersection_pool(1000)
 {

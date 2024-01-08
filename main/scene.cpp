@@ -1,5 +1,5 @@
 #include "scene.h"
-#include "sphere.h"
+#include "shapes/shapes.h"
 
 Scene::Scene() : 
     _entities(10),
@@ -8,7 +8,7 @@ Scene::Scene() :
     _directional_light_dir = _directional_light_dir.normalize();
 }
 
-Entity* Scene::add_shape(Entity* s) {
+Renderable* Scene::add_shape(Renderable* s) {
     _entities.append(s);
     return s;
 }
@@ -17,10 +17,10 @@ vec3 Scene::directional_light_dir() const {
     return _directional_light_dir;
 }
 
-vector<Entity*>::Iterator Scene::begin() const {
+vector<Renderable*>::Iterator Scene::begin() const {
     return _entities.begin();
 }
 
-vector<Entity*>::Iterator Scene::end() const {
+vector<Renderable*>::Iterator Scene::end() const {
     return _entities.end();
 }

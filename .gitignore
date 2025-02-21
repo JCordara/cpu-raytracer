@@ -6,6 +6,7 @@
 
 # Build output directory
 bin/
+build/
 
 # Development image name
 output.bmp

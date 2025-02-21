@@ -1,0 +1,33 @@
+cmake_minimum_required(VERSION 3.19 FATAL_ERROR)
+
+set(APP cpu_raytracer)
+set(SOURCE_DIR "${CMAKE_SOURCE_DIR}/main")
+set(LIB_DIR "${CMAKE_SOURCE_DIR}/lib")
+
+project(${APP})
+
+list(APPEND SOURCES
+    "${SOURCE_DIR}/main.cpp"
+    "${SOURCE_DIR}/raytracer.cpp"
+    "${SOURCE_DIR}/ray.cpp"
+    "${SOURCE_DIR}/scene.cpp"
+    "${SOURCE_DIR}/camera.cpp"
+    "${SOURCE_DIR}/image_surface.cpp"
+    "${SOURCE_DIR}/intersection.cpp"
+    "${SOURCE_DIR}/material.cpp"
+    "${SOURCE_DIR}/debug.cpp"
+    "${SOURCE_DIR}/shapes/sphere.cpp"
+    "${SOURCE_DIR}/shapes/plane.cpp"
+)
+
+list(APPEND LIB_SOURCES
+    "${LIB_DIR}/random.cpp"
+    "${LIB_DIR}/gen_bmp.cpp"
+    "${LIB_DIR}/math/mat3.cpp"
+    "${LIB_DIR}/math/mat4.cpp"
+    "${LIB_DIR}/math/vec3f.cpp"
+    "${LIB_DIR}/math/vec4f.cpp"
+)
+
+add_executable(${APP} ${SOURCES} ${LIB_SOURCES})
+target_include_directories(${APP} PRIVATE ${SOURCE_DIR} ${LIB_DIR})
